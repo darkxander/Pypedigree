@@ -1,0 +1,63 @@
+name: Bug report
+description: A diagram renders wrongly, a file fails to parse, or something crashes
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. A pedigree file that reproduces the problem is
+        the single most useful thing you can include.
+
+        **Please do not attach data derived from real individuals.** Reduce it
+        to a synthetic file that still shows the bug, or replace the
+        identifiers and phenotype values.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: pedigree
+    attributes:
+      label: Pedigree file
+      description: A minimal synthetic .ped that reproduces it, pasted as text.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or code
+      description: The exact CLI invocation or Python snippet you ran.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The full traceback, or a description of the rendered figure. Attach the image if the problem is visual.
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: pypedigree version
+      description: Output of `pypedigree --version`
+      placeholder: "0.4.0"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Python version and OS
+      placeholder: "Python 3.12 on macOS 15"
+    validations:
+      required: true

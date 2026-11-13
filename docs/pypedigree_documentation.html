@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pypedigree Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg: #ffffff;
+    --bg-alt: #f8fafc;
+    --bg-code: #f1f5f9;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --accent: #e74c3c;
+    --success: #16a34a;
+    --warning: #d97706;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    line-height: 1.7;
+    background: var(--bg);
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  header .subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+  }
+  header .version {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 0.2rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Nav */
+  nav {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  nav a:hover { color: var(--primary); background: white; }
+
+  /* Sections */
+  section {
+    margin: 2.5rem 0;
+    padding-top: 1rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+    color: var(--text);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-muted);
+  }
+
+  p { margin-bottom: 0.8rem; }
+
+  /* Code */
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.88em;
+    background: var(--bg-code);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    color: #be185d;
+  }
+
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    line-height: 1.5;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+
+  .keyword { color: #c084fc; }
+  .string { color: #86efac; }
+  .comment { color: #64748b; }
+  .func { color: #67e8f9; }
+  .num { color: #fbbf24; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  th {
+    background: var(--bg-alt);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+  }
+  tr:nth-child(even) { background: var(--bg-alt); }
+
+  /* Images */
+  .example-img {
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+  .example-img img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .example-img figcaption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Callouts */
+  .callout {
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid;
+  }
+  .callout-info {
+    background: #eff6ff;
+    border-color: var(--primary);
+  }
+  .callout-warning {
+    background: #fffbeb;
+    border-color: var(--warning);
+  }
+  .callout-tip {
+    background: #f0fdf4;
+    border-color: var(--success);
+  }
+  .callout strong {
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Parameter list */
+  .param-list {
+    margin: 0.5rem 0;
+  }
+  .param-list dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88em;
+    color: #7c3aed;
+    margin-top: 0.6rem;
+    font-weight: 500;
+  }
+  .param-list dd {
+    margin-left: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.92em;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* Print / PDF */
+  @media print {
+    nav { display: none; }
+    header { padding: 1.5rem 0; }
+    section { page-break-inside: avoid; }
+    pre { font-size: 0.8rem; }
+    .container { max-width: 100%; }
+    body { font-size: 11pt; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>pypedigree</h1>
+    <p class="subtitle">Generate publication-quality pedigree diagrams from standard genetics pedigree files</p>
+    <span class="version">v0.4.0</span>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#quickstart">Quick Start</a></li>
+      <li><a href="#file-format">File Format</a></li>
+      <li><a href="#cli">CLI Reference</a></li>
+      <li><a href="#python-api">Python API</a></li>
+      <li><a href="#builder-api">Builder API</a></li>
+      <li><a href="#phenotypes">Multi-Phenotype</a></li>
+      <li><a href="#display-modes">Display Modes</a></li>
+      <li><a href="#annotations">Annotations</a></li>
+      <li><a href="#carriers">Carriers</a></li>
+      <li><a href="#notation">Standard Notation</a></li>
+      <li><a href="#interactive-svg">Interactive SVG</a></li>
+      <li><a href="#styling">Styling</a></li>
+      <li><a href="#plink">PLINK Integration</a></li>
+      <li><a href="#layout-engine">Layout Engine</a></li>
+      <li><a href="#models">Data Models</a></li>
+      <li><a href="#examples">Gallery</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ================================================================ -->
+<section id="installation">
+<h2>Installation</h2>
+
+<h3>From PyPI</h3>
+<pre><code>pip install pypedigree</code></pre>
+
+<h3>With pandas support</h3>
+<pre><code>pip install pypedigree[pandas]</code></pre>
+
+<h3>From source (development)</h3>
+<pre><code>git clone https://github.com/darkxander/Pypedigree.git
+cd pypedigree
+uv sync --extra dev</code></pre>
+
+<h3>Requirements</h3>
+<ul>
+  <li>Python 3.10+</li>
+  <li>matplotlib &ge; 3.7</li>
+  <li>numpy &ge; 1.24</li>
+  <li>click &ge; 8.0 (for CLI)</li>
+  <li>pandas (optional, for DataFrame input)</li>
+</ul>
+</section>
+
+<!-- ================================================================ -->
+<section id="quickstart">
+<h2>Quick Start</h2>
+
+<h3>Command Line</h3>
+<pre><code><span class="comment"># Render a pedigree file to PNG</span>
+pypedigree family.ped -o output.png
+
+<span class="comment"># Display interactively</span>
+pypedigree family.ped --show
+
+<span class="comment"># Render specific family at high resolution</span>
+pypedigree family.ped --family FAM1 --dpi 300 -o family1.svg</code></pre>
+
+<h3>Python Script</h3>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, render_pedigree
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+fig = render_pedigree(ped, output=<span class="string">"output.png"</span>)</code></pre>
+
+<h3>Programmatic Builder</h3>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeBuilder
+
+builder = PedigreeBuilder(<span class="string">"FAM1"</span>)
+builder.add_individual(<span class="string">"father"</span>, sex=<span class="string">"male"</span>)
+builder.add_individual(<span class="string">"mother"</span>, sex=<span class="string">"female"</span>)
+builder.add_individual(<span class="string">"child"</span>, sex=<span class="string">"male"</span>,
+                       father=<span class="string">"father"</span>, mother=<span class="string">"mother"</span>,
+                       phenotype=<span class="string">"affected"</span>)
+fig = builder.render(output=<span class="string">"trio.png"</span>)</code></pre>
+
+<figure class="example-img">
+  <img src="imgs/examples/api_example.png" alt="Programmatic API example" style="max-width:350px">
+  <figcaption>Output of the PedigreeBuilder example above</figcaption>
+</figure>
+</section>
+
+<!-- ================================================================ -->
+<section id="file-format">
+<h2>Pedigree File Format</h2>
+
+<p>pypedigree reads tab-, comma-, or space-separated pedigree files. The separator is auto-detected.</p>
+
+<h3>Smart Header-Based Column Mapping</h3>
+<p>When a header row is present, columns are matched <strong>by name, not by position</strong>. This means you can arrange columns in any order, and any column that doesn't match a known structural name is automatically treated as a phenotype column.</p>
+
+<p>The parser recognises multiple aliases for each structural column:</p>
+<table>
+  <thead>
+    <tr><th>Role</th><th>Accepted Aliases</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Family ID</td><td><code>FID</code>, <code>family_id</code>, <code>Family</code></td></tr>
+    <tr><td>Individual ID</td><td><code>ID</code>, <code>IID</code>, <code>sample_id</code>, <code>Individual</code></td></tr>
+    <tr><td>Father</td><td><code>Father</code>, <code>Pat</code>, <code>Dad</code>, <code>paternal_id</code></td></tr>
+    <tr><td>Mother</td><td><code>Mother</code>, <code>Mat</code>, <code>Mom</code>, <code>Mum</code>, <code>maternal_id</code></td></tr>
+    <tr><td>Sex</td><td><code>Sex</code>, <code>Gender</code></td></tr>
+    <tr><td>Phenotype</td><td><code>Phenotype</code>, <code>Pheno</code>, <code>Affected</code></td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-tip">
+  <strong>Extra columns become phenotypes</strong>
+  Any header name that doesn't match one of the structural aliases above is automatically parsed as an extra phenotype column. This makes it easy to add phenotype data without worrying about column positions.
+</div>
+
+<h3>Standard 6-Column Format</h3>
+
+<table>
+  <thead>
+    <tr><th>Column</th><th>Name</th><th>Description</th><th>Values</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>family_id</td><td>Family identifier</td><td>Any string</td></tr>
+    <tr><td>2</td><td>sample_id</td><td>Individual identifier (unique within family)</td><td>Any string</td></tr>
+    <tr><td>3</td><td>paternal_id</td><td>Father's sample_id</td><td>ID or <code>0</code> if unknown</td></tr>
+    <tr><td>4</td><td>maternal_id</td><td>Mother's sample_id</td><td>ID or <code>0</code> if unknown</td></tr>
+    <tr><td>5</td><td>sex</td><td>Biological sex</td><td><code>1</code>=male, <code>2</code>=female, <code>0</code>=unknown</td></tr>
+    <tr><td>6</td><td>phenotype</td><td>Affected status</td><td><code>1</code>=unaffected, <code>2</code>=affected, <code>0</code>=unknown</td></tr>
+  </tbody>
+</table>
+
+<h4>Example: simple_trio.ped</h4>
+<pre><code>FAM1  father  0       0       1  1
+FAM1  mother  0       0       2  1
+FAM1  child   father  mother  1  2</code></pre>
+
+<h3>Extended Format (Columns 7&ndash;10)</h3>
+
+<table>
+  <thead>
+    <tr><th>Column</th><th>Name</th><th>Description</th><th>Values</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>7</td><td>date_of_birth</td><td>Birth date</td><td><code>YYYYMMDD</code>, <code>YYYYMM</code>, or <code>YYYY</code></td></tr>
+    <tr><td>8</td><td>twins</td><td>Twin relationships</td><td><code>TYPE:sibling_id</code> (comma-separated)</td></tr>
+    <tr><td>9</td><td>deceased</td><td>Vital status</td><td><code>1</code>=deceased, <code>0</code>=alive</td></tr>
+    <tr><td>10</td><td>proband</td><td>Index case</td><td><code>1</code>=proband, <code>0</code>=not</td></tr>
+    <tr><td>11</td><td>carrier</td><td>Carrier status</td><td><code>0</code>=not carrier, <code>1</code>=carrier (heterozygous), <code>2</code>=obligate carrier. Per-gene status: <code>cr_</code> columns, see <a href="#carriers">Carrier Notation</a></td></tr>
+  </tbody>
+</table>
+
+<p>Standard notation &mdash; pregnancies and pregnancy losses, adoption, childlessness, gamete donors and surrogates, gender identity, the consultand &mdash; has its own named columns, see <a href="#notation">Standard Notation</a>.</p>
+
+<div class="callout callout-info">
+  <strong>Carrier column</strong>
+  The <code>carrier</code> column requires a header row to be present. When using inline phenotypes (columns 12+), the carrier column must appear before the phenotype columns.
+</div>
+
+<div class="callout callout-info">
+  <strong>Twin types</strong>
+  <code>MZ</code> = monozygotic (identical), <code>DZ</code> = dizygotic (fraternal), <code>TW</code> = unknown zygosity.
+  Example: <code>MZ:sibling_id</code>
+</div>
+
+<h3>Inline Phenotypes (Columns 11+)</h3>
+<p>When a <strong>header row</strong> is present, columns 11 and beyond are parsed as additional phenotype values.
+Column names from the header define phenotype names.</p>
+
+<h4>Example with inline phenotypes</h4>
+<pre><code>family_id  sample_id  father  mother  sex  pheno  dob  twins  deceased  proband  epilepsy  IQ   SRS
+FAM1       father     0       0       1    1      0    0      0         0        0         110  12
+FAM1       mother     0       0       2    1      0    0      0         0        1         95   25
+FAM1       son        father  mother  1    2      0    0      0         1        1         85   40
+FAM1       daughter   father  mother  2    1      0    0      0         0        0         120  8</code></pre>
+
+<div class="callout callout-tip">
+  <strong>Phenotype value interpretation</strong>
+  <ul>
+    <li><strong>Standard pedigree encoding (1/2)</strong>: values <code>1</code>=unaffected, <code>2</code>=affected, <code>0</code> or <code>-9</code>=unknown are properly handled in extra phenotype columns, following the same convention as the main phenotype column</li>
+    <li><strong>Binary</strong> (0 or 1): filled band (1) or empty band (0)</li>
+    <li><strong>Continuous</strong> (values &gt; 1): color gradient from white (min) to full color (max)</li>
+    <li><strong>PGS column</strong>: rendered as a vertical Gaussian distribution curve</li>
+    <li><strong>Missing</strong> (<code>.</code>, <code>NA</code>, <code>NaN</code>, <code>-9</code>, empty): white/blank band</li>
+    <li><strong><code>a_</code> prefix columns</strong> are annotation columns (text below IDs, not phenotypes)</li>
+    <li><strong><code>gi_</code> prefix</strong> for gradient inverted (color&rarr;white, for metrics where low = bad)</li>
+    <li><strong><code>cr_</code> prefix</strong> for carrier status of one gene or condition (0/1/2), drawn as a patterned section, see <a href="#carriers">Carrier Notation</a></li>
+    <li><strong>Comma decimal separator</strong>: <code>0,712</code> is accepted as <code>0.712</code></li>
+  </ul>
+</div>
+
+<div class="callout callout-info">
+  <strong>Binary phenotype rendering</strong>
+  Binary phenotypes (including standard 1/2 encoding) are rendered as: <strong>color</strong>=affected, <strong>white</strong>=unaffected, <strong>grey</strong>=unknown. No text labels are shown by default. To display YES/NO text inside the bands, use the <code>show_phenotype_labels</code> style option or the <code>--show-phenotype-labels</code> CLI flag.
+</div>
+
+<h3>Separate Phenotype File</h3>
+<p>Extra phenotypes can also be supplied via a separate TSV file with the <code>--pheno</code> CLI flag:</p>
+<pre><code>sample_id  epilepsy  IQ    SRS
+father     0         110   12
+mother     1         95    25
+son        1         85    40
+daughter   0         120   8</code></pre>
+</section>
+
+<!-- ================================================================ -->
+<section id="cli">
+<h2>CLI Reference</h2>
+
+<pre><code>pypedigree PEDIGREE_FILE [OPTIONS]</code></pre>
+
+<table>
+  <thead>
+    <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>-o, --output PATH</code></td><td>Output file path (format from extension: .png, .svg, .pdf)</td><td>None (display)</td></tr>
+    <tr><td><code>--format FORMAT</code></td><td>Force output format: <code>png</code>, <code>svg</code>, <code>pdf</code></td><td>Auto-detect</td></tr>
+    <tr><td><code>--family ID</code></td><td>Render only this family</td><td>All families</td></tr>
+    <tr><td><code>--dpi INT</code></td><td>Output resolution in DPI</td><td>150</td></tr>
+    <tr><td><code>--show</code></td><td>Display interactively (matplotlib window)</td><td>Off</td></tr>
+    <tr><td><code>--style PATH</code></td><td>JSON file with PedigreeStyle overrides</td><td>None</td></tr>
+    <tr><td><code>--separator SEP</code></td><td>Force separator: <code>tab</code>, <code>comma</code>, <code>space</code></td><td>Auto-detect</td></tr>
+    <tr><td><code>--pheno PATH</code></td><td>Separate .pheno TSV file for extra phenotypes</td><td>None</td></tr>
+    <tr><td><code>--annotations PATH</code></td><td>Separate TSV file with annotation text (displayed below individual IDs)</td><td>None</td></tr>
+    <tr><td><code>--outline-color COLOR</code></td><td>Shape outline color (e.g. <code>grey</code>, <code>#888</code>)</td><td>black</td></tr>
+    <tr><td><code>--carrier-notation [nsgc2022|legacy]</code></td><td>Carrier notation: patterned sections (NSGC 2022) or half-fill and center dot</td><td>nsgc2022</td></tr>
+    <tr><td><code>--no-labels</code></td><td>Hide sample ID labels under shapes</td><td>Off</td></tr>
+    <tr><td><code>--no-legend</code></td><td>Hide phenotype legend</td><td>Off</td></tr>
+    <tr><td><code>--show-phenotype-labels</code></td><td>Show YES/NO text inside binary phenotype bands (hidden by default)</td><td>Off</td></tr>
+    <tr><td><code>--plink</code></td><td>Treat input as PLINK .ped file (ignore genotype columns after column 6)</td><td>Off</td></tr>
+    <tr><td><code>--interactive</code></td><td>Generate interactive SVG with tooltips, click highlighting, and zoom/pan (same bands, legend and PGS curves as the PNG; not with <code>--circular</code>)</td><td>Off</td></tr>
+    <tr><td><code>--circular</code></td><td>Use circular/radial layout with founders at centre, descendants on concentric rings</td><td>Off</td></tr>
+    <tr><td><code>--version</code></td><td>Show version and exit</td><td>&mdash;</td></tr>
+  </tbody>
+</table>
+
+<h3>Examples</h3>
+<pre><code><span class="comment"># Basic rendering</span>
+pypedigree family.ped -o pedigree.png
+
+<span class="comment"># SVG with custom DPI and no labels</span>
+pypedigree family.ped -o pedigree.svg --dpi 300 --no-labels
+
+<span class="comment"># With external phenotype file and custom style</span>
+pypedigree family.ped --pheno phenotypes.tsv --style custom.json -o result.pdf
+
+<span class="comment"># Grey outlines for a cleaner look</span>
+pypedigree family.ped --outline-color grey -o pedigree.png
+
+<span class="comment"># Interactive SVG with tooltips and click highlighting</span>
+pypedigree family.ped --interactive -o pedigree.svg
+
+<span class="comment"># Show YES/NO labels in binary phenotype bands</span>
+pypedigree family.ped --show-phenotype-labels -o pedigree.png
+
+<span class="comment"># Read a PLINK .fam file (auto-detected from extension)</span>
+pypedigree family.fam -o pedigree.png
+
+<span class="comment"># Read a PLINK .ped file (use --plink to ignore genotype columns)</span>
+pypedigree family.ped --plink -o pedigree.png</code></pre>
+</section>
+
+<!-- ================================================================ -->
+<section id="python-api">
+<h2>Python API</h2>
+
+<h3>Parsing</h3>
+
+<h4><code>parse_pedigree(file_path)</code></h4>
+<p>Parse a pedigree file (.ped) into a <code>Pedigree</code> object.</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+<span class="keyword">for</span> fam_id, family <span class="keyword">in</span> ped.families.items():
+    print(f<span class="string">"{fam_id}: {len(family.individuals)} individuals"</span>)</code></pre>
+
+<h4><code>parse_pedigree_from_string(text)</code></h4>
+<p>Parse pedigree data from a string (useful for testing or embedded data).</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree_from_string
+
+data = <span class="string">"""FAM1\tfather\t0\t0\t1\t1
+FAM1\tmother\t0\t0\t2\t1
+FAM1\tchild\tfather\tmother\t1\t2"""</span>
+ped = parse_pedigree_from_string(data)</code></pre>
+
+<h4><code>parse_pedigree_from_dataframe(df)</code></h4>
+<p>Parse from a pandas DataFrame. Requires <code>pip install pypedigree[pandas]</code>.</p>
+<pre><code><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree_from_dataframe
+
+df = pd.read_csv(<span class="string">"family.ped"</span>, sep=<span class="string">"\t"</span>, header=None)
+ped = parse_pedigree_from_dataframe(df)</code></pre>
+
+<h4><code>parse_phenotype_file(file_path)</code></h4>
+<p>Parse a separate phenotype TSV file.</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_phenotype_file, apply_phenotypes_to_pedigree
+
+pheno_data, pheno_names = parse_phenotype_file(<span class="string">"phenotypes.tsv"</span>)
+apply_phenotypes_to_pedigree(ped, pheno_data, pheno_names)</code></pre>
+
+<h4><code>parse_annotation_file(file_path)</code></h4>
+<p>Parse an external annotation TSV file. First row is a header (<code>sample_id</code>, <code>ann1</code>, <code>ann2</code>, ...), subsequent rows contain text values.</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_annotation_file, apply_annotations_to_pedigree
+
+ann_data, ann_names = parse_annotation_file(<span class="string">"annotations.tsv"</span>)
+apply_annotations_to_pedigree(ped, ann_data, ann_names)</code></pre>
+
+<h3>Rendering</h3>
+
+<h4><code>render_pedigree(pedigree, ...)</code></h4>
+<p>Render all families in a pedigree. Returns a matplotlib <code>Figure</code>.</p>
+
+<dl class="param-list">
+  <dt>pedigree: Pedigree</dt><dd>The pedigree to render.</dd>
+  <dt>style: PedigreeStyle | None = None</dt><dd>Visual style (defaults if None).</dd>
+  <dt>output: str | Path | None = None</dt><dd>Save to file (PNG/SVG/PDF). None for in-memory only.</dd>
+  <dt>ax: matplotlib.axes.Axes | None = None</dt><dd>Render onto existing axes.</dd>
+  <dt>show_labels: bool = True</dt><dd>Show sample ID labels under shapes.</dd>
+  <dt>show_legend: bool = True</dt><dd>Show phenotype legend (when phenotypes + colors exist).</dd>
+  <dt>circular: bool = False</dt><dd>Use circular/radial layout (founders at centre, descendants on concentric rings).</dd>
+</dl>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, render_pedigree, PedigreeStyle
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+style = PedigreeStyle(dpi=<span class="num">300</span>)
+fig = render_pedigree(ped, style=style, output=<span class="string">"high_res.png"</span>)</code></pre>
+
+<h4><code>render_family(family, ...)</code></h4>
+<p>Render a single <code>Family</code> object. Returns <code>(Figure, FamilyLayout)</code>.</p>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, render_family
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+family = list(ped.families.values())[<span class="num">0</span>]
+fig, layout = render_family(family)
+fig.savefig(<span class="string">"family.png"</span>, dpi=<span class="num">150</span>, bbox_inches=<span class="string">"tight"</span>)</code></pre>
+
+<h4><code>render_interactive_svg(pedigree, ...)</code></h4>
+<p>Render all families as an interactive SVG with tooltips, click highlighting, and zoom/pan. Returns the SVG markup as a string. Draws the same figure as <code>render_pedigree()</code>. No additional dependencies required.</p>
+
+<dl class="param-list">
+  <dt>pedigree: Pedigree</dt><dd>The pedigree to render.</dd>
+  <dt>style: PedigreeStyle | None = None</dt><dd>Visual style (defaults if None).</dd>
+  <dt>output: str | Path | None = None</dt><dd>Save SVG to file. None for in-memory only.</dd>
+  <dt>show_labels: bool = True</dt><dd>Draw sample ID labels under shapes.</dd>
+  <dt>show_legend: bool = True</dt><dd>Draw the phenotype and carrier legend.</dd>
+</dl>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, render_interactive_svg
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+svg_str = render_interactive_svg(ped, output=<span class="string">"interactive.svg"</span>)</code></pre>
+
+<h3>Layout (advanced)</h3>
+
+<h4><code>compute_layout(family, style)</code></h4>
+<p>Compute layout coordinates without rendering. Returns a <code>FamilyLayout</code> with node positions and edge geometry.</p>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> compute_layout, PedigreeStyle
+
+layout = compute_layout(family, PedigreeStyle())
+<span class="keyword">for</span> node <span class="keyword">in</span> layout.nodes:
+    print(f<span class="string">"{node.individual_id}: x={node.x:.1f}, y={node.y:.1f}"</span>)</code></pre>
+
+<h4><code>compute_layout_circular(family, style)</code></h4>
+<p>Compute circular/radial layout coordinates. Founders sit at the centre and each later generation on its own concentric ring, in the left-to-right order of the hierarchical layout wrapped around the circle. The circular layout therefore inherits its guarantees: siblings stay together, sibship arcs of different couples never overlap, partners sit side by side, and tangled loops are drawn with duplicated individuals.</p>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> compute_layout_circular, PedigreeStyle
+
+layout = compute_layout_circular(family, PedigreeStyle())
+<span class="keyword">for</span> node <span class="keyword">in</span> layout.nodes:
+    print(f<span class="string">"{node.individual_id}: x={node.x:.1f}, y={node.y:.1f}"</span>)</code></pre>
+
+<p><code>base_radius</code> is expanded automatically when a ring would be too
+crowded for the shapes to fit, so nodes never overlap. Shapes stay upright: a
+square turned to face outward would read as the unknown-sex diamond, and
+phenotype bands stay horizontal as in the hierarchical layout. ID labels are
+set radially outside each shape, away from the lines arriving from the centre,
+on a white backing. Twins hang from one point of the sibship arc, as a V with
+a bar for MZ twins, and duplicates are joined to their original by a dotted
+arc.</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="builder-api">
+<h2>PedigreeBuilder API</h2>
+
+<p>The <code>PedigreeBuilder</code> provides a fluent interface for constructing pedigrees programmatically,
+without writing .ped files. All methods return <code>self</code> for method chaining.</p>
+
+<h3><code>PedigreeBuilder(family_id="FAM1")</code></h3>
+<p>Create a new builder with a default family ID.</p>
+
+<h3><code>add_individual(sample_id, ...)</code></h3>
+<p>Add an individual to the pedigree.</p>
+
+<dl class="param-list">
+  <dt>sample_id: str</dt><dd>Unique identifier for this individual (required).</dd>
+  <dt>sex: str | Sex = "unknown"</dt><dd>Biological sex: <code>"male"</code>, <code>"female"</code>, <code>"unknown"</code> (or <code>"m"</code>, <code>"f"</code>, <code>"u"</code>, <code>"1"</code>, <code>"2"</code>, <code>"0"</code>).</dd>
+  <dt>phenotype: str | Phenotype = "unknown"</dt><dd>Affected status: <code>"affected"</code>, <code>"unaffected"</code>, <code>"unknown"</code>.</dd>
+  <dt>father: str | None = None</dt><dd>Father's sample_id. Phantom parent created if not added explicitly.</dd>
+  <dt>mother: str | None = None</dt><dd>Mother's sample_id. Phantom parent created if not added explicitly.</dd>
+  <dt>family_id: str | None = None</dt><dd>Override the builder's default family ID.</dd>
+  <dt>deceased: bool = False</dt><dd>Whether this individual is deceased (diagonal line through shape).</dd>
+  <dt>proband: bool = False</dt><dd>Whether this is the proband/index case (arrow marker).</dd>
+  <dt>date_of_birth: str | None = None</dt><dd>Date of birth string.</dd>
+  <dt>phenotypes: dict[str, float | int] | None = None</dt><dd>Extra phenotype values as {name: value}.</dd>
+  <dt>carrier: bool = False</dt><dd>Whether this individual is a carrier (heterozygous). Rendered as a patterned section (NSGC 2022), or a half-filled shape with the legacy notation.</dd>
+  <dt>obligate_carrier: bool = False</dt><dd>Whether this is an obligate carrier. Rendered as a sparser pattern (NSGC 2022), or a center dot with the legacy notation.</dd>
+  <dt>annotations: list[str] | None = None</dt><dd>Text lines to display below the individual's ID label (e.g. variant names).</dd>
+  <dt>pregnancy: str | Pregnancy | None = None</dt><dd><code>"P"</code>, <code>"SAB"</code>, <code>"TOP"</code>, <code>"ECT"</code> or <code>"SB"</code>, see <a href="#notation">Standard Notation</a>.</dd>
+  <dt>adopted: str | Adoption | None = None</dt><dd><code>"in"</code> (father/mother are the adoptive parents) or <code>"out"</code>.</dd>
+  <dt>childless: str | Childlessness | None = None</dt><dd><code>"choice"</code> or <code>"infertility"</code>.</dd>
+  <dt>art: str | ReproductiveRole | None = None</dt><dd><code>"D"</code> gamete donor or <code>"S"</code> surrogate.</dd>
+  <dt>gender: str | Gender | None = None</dt><dd>Gender identity, <code>"man"</code>, <code>"woman"</code> or <code>"nonbinary"</code>: the symbol follows it, and <code>sex</code> is the sex assigned at birth.</dd>
+  <dt>consultand: bool = False</dt><dd>Arrow without &ldquo;P&rdquo;.</dd>
+</dl>
+
+<h3><code>add_union(partner1, partner2, ...)</code></h3>
+<p>Explicitly add a union between two individuals. Unions are auto-inferred from parent references,
+so this is only needed for <strong>childless couples</strong> or to set consanguinity/broken flags.</p>
+
+<dl class="param-list">
+  <dt>partner1: str</dt><dd>First partner's sample_id.</dd>
+  <dt>partner2: str</dt><dd>Second partner's sample_id.</dd>
+  <dt>consanguineous: bool = False</dt><dd>Double-line relationship (shared ancestors).</dd>
+  <dt>broken: bool = False</dt><dd>Broken-line relationship (dissolved).</dd>
+</dl>
+
+<h3><code>set_style(style)</code></h3>
+<p>Set a custom <code>PedigreeStyle</code> for rendering.</p>
+
+<h3><code>build() &rarr; Pedigree</code></h3>
+<p>Build a <code>Pedigree</code> object from added individuals. Auto-infers unions and creates phantom parents.</p>
+
+<h3><code>render(output=None, ...) &rarr; Figure</code></h3>
+<p>Build and render in one step. Auto-assigns phenotype colors if not set.</p>
+
+<h3><code>render_interactive_svg(output=None) &rarr; str</code></h3>
+<p>Build and render as an interactive SVG. Returns the SVG markup as a string.
+If <code>output</code> is provided, the SVG is also written to that file path.
+See the <a href="#interactive-svg">Interactive SVG</a> section for details.</p>
+
+<h3>Complete Example</h3>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeBuilder
+
+builder = PedigreeBuilder(<span class="string">"FAM1"</span>)
+
+<span class="comment"># Generation 1: founders</span>
+builder.add_individual(<span class="string">"gf"</span>, sex=<span class="string">"male"</span>)
+builder.add_individual(<span class="string">"gm"</span>, sex=<span class="string">"female"</span>)
+
+<span class="comment"># Generation 2</span>
+builder.add_individual(<span class="string">"father"</span>, sex=<span class="string">"male"</span>, father=<span class="string">"gf"</span>, mother=<span class="string">"gm"</span>)
+builder.add_individual(<span class="string">"mother"</span>, sex=<span class="string">"female"</span>)
+
+<span class="comment"># Generation 3 with phenotypes</span>
+builder.add_individual(<span class="string">"child1"</span>, sex=<span class="string">"male"</span>,
+    father=<span class="string">"father"</span>, mother=<span class="string">"mother"</span>,
+    phenotype=<span class="string">"affected"</span>, proband=True,
+    phenotypes={<span class="string">"IQ"</span>: <span class="num">85</span>, <span class="string">"epilepsy"</span>: <span class="num">1</span>})
+builder.add_individual(<span class="string">"child2"</span>, sex=<span class="string">"female"</span>,
+    father=<span class="string">"father"</span>, mother=<span class="string">"mother"</span>,
+    phenotypes={<span class="string">"IQ"</span>: <span class="num">120</span>, <span class="string">"epilepsy"</span>: <span class="num">0</span>})
+
+fig = builder.render(output=<span class="string">"family.png"</span>)</code></pre>
+
+<h3>Jupyter Notebook Integration</h3>
+<p>The builder has built-in Jupyter support via <code>_repr_png_</code>. Simply evaluate a builder cell to see the pedigree inline:</p>
+<pre><code>builder  <span class="comment"># Displays the pedigree diagram inline</span></code></pre>
+</section>
+
+<!-- ================================================================ -->
+<section id="phenotypes">
+<h2>Multi-Phenotype Support</h2>
+
+<p>pypedigree can display multiple phenotypes per individual using colored bands or gradient fills on each shape.</p>
+
+<h3>Phenotype Types</h3>
+<table>
+  <thead>
+    <tr><th>Type</th><th>Values</th><th>Rendering</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Binary</td><td>0 or 1</td><td>Empty (0) or filled (1) color band</td></tr>
+    <tr><td>Continuous</td><td>Numeric &gt; 1</td><td>Color gradient: white (min) &rarr; full color (max)</td></tr>
+    <tr><td>PGS</td><td>Any numeric</td><td>Vertical Gaussian distribution curve (to the left of shape)</td></tr>
+    <tr><td>Missing</td><td><code>.</code>, <code>NA</code>, <code>NaN</code>, <code>-9</code>, empty</td><td>White/blank band</td></tr>
+  </tbody>
+</table>
+
+<figure class="example-img">
+  <img src="imgs/examples/multi_phenotype.png" alt="Multi-phenotype rendering" style="max-width:450px">
+  <figcaption>Multi-phenotype pedigree with epilepsy (binary), IQ (continuous), and SRS (continuous)</figcaption>
+</figure>
+
+<h3>Setting Phenotype Colors</h3>
+
+<h4>Via CLI (JSON style file)</h4>
+<pre><code><span class="comment">// style.json</span>
+{
+  <span class="string">"phenotype_colors"</span>: {
+    <span class="string">"epilepsy"</span>: <span class="string">"#e74c3c"</span>,
+    <span class="string">"IQ"</span>: <span class="string">"#3498db"</span>,
+    <span class="string">"SRS"</span>: <span class="string">"#e67e22"</span>
+  }
+}</code></pre>
+<pre><code>pypedigree family.ped --style style.json -o output.png</code></pre>
+
+<h4>Via Python</h4>
+<pre><code>style = PedigreeStyle()
+style.phenotype_colors = {
+    <span class="string">"epilepsy"</span>: <span class="string">"#e74c3c"</span>,
+    <span class="string">"IQ"</span>: <span class="string">"#3498db"</span>,
+    <span class="string">"SRS"</span>: <span class="string">"#e67e22"</span>,
+}
+fig = render_pedigree(ped, style=style)</code></pre>
+
+<h4>Auto-assigned</h4>
+<p>When no <code>phenotype_colors</code> are set, colors are assigned from the default
+palette. This happens for every entry point &mdash; the CLI, <code>render_pedigree()</code>
+and <code>PedigreeBuilder</code> &mdash; via <code>resolve_style()</code>, so all three
+produce the same figure for the same input.</p>
+
+<h3>PGS (Polygenic Score) Display</h3>
+<p>When a column is named <code>PGS</code> (case-insensitive), it is rendered as a vertical Gaussian curve to the left of each individual's shape, instead of a band. The curve's position along the x-axis reflects the PGS value relative to other individuals.</p>
+
+<figure class="example-img">
+  <img src="imgs/examples/multi_phenotype_pgs.png" alt="PGS rendering" style="max-width:500px">
+  <figcaption>Pedigree with phenotype bands + PGS Gaussian curves</figcaption>
+</figure>
+
+<h4>Multiple PGS Columns</h4>
+<p>Any column starting with <code>PGS</code> (case-insensitive) is treated as a PGS column. For example: <code>PGS_autism</code>, <code>PGS_IQ</code>, <code>PGS_ADHD</code>. All PGS columns share a single gaussian curve, with each trait's individual score marked by a colored dashed line. Colors are set via the <code>pgs_colors</code> style option.</p>
+
+<h4>Custom Gradient Ranges</h4>
+<p>By default, gradient values are normalized to [0,1] using the data's min/max. You can override this with the <code>gradient_range</code> style option to define fixed scales:</p>
+<pre><code>{
+    "gradient_range": {
+        "SRS": [40, 90]
+    }
+}</code></pre>
+
+<h4>Diverging (Tricolor) Gradient</h4>
+<p>For phenotypes with a meaningful midpoint (e.g., IQ where 100 is average), use <code>gradient_diverging</code> to create a red&rarr;white&rarr;green scale:</p>
+<pre><code>{
+    "gradient_diverging": {
+        "IQ": {"min": 40, "mid": 100, "max": 160, "color_low": "#e74c3c", "color_high": "#2ecc71"}
+    }
+}</code></pre>
+<p>Values below the midpoint blend toward <code>color_low</code>, values above blend toward <code>color_high</code>, and the midpoint is white.</p>
+
+<h4>Categorical Columns</h4>
+<p>Each distinct value of a <code>c_</code> column gets its own color, assigned in the
+order the values appear in the file so the result is reproducible. The column's own
+<code>phenotype_colors</code> entry is used for the first value; the remaining values
+avoid both that color and the colors of the other phenotype columns, so two bands on
+the same individual stay visually distinct. The legend lists exactly the values present
+in the rendered pedigree.</p>
+
+<h3>Default Color Palette</h3>
+<p>When colors are auto-assigned, the following 8-color palette is used:</p>
+<table>
+  <tr>
+    <td style="background:#e74c3c;color:white;text-align:center;width:12%">#e74c3c</td>
+    <td style="background:#3498db;color:white;text-align:center;width:12%">#3498db</td>
+    <td style="background:#e67e22;color:white;text-align:center;width:12%">#e67e22</td>
+    <td style="background:#2ecc71;color:white;text-align:center;width:12%">#2ecc71</td>
+    <td style="background:#9b59b6;color:white;text-align:center;width:12%">#9b59b6</td>
+    <td style="background:#1abc9c;color:white;text-align:center;width:12%">#1abc9c</td>
+    <td style="background:#f1c40f;color:black;text-align:center;width:12%">#f1c40f</td>
+    <td style="background:#e91e63;color:white;text-align:center;width:12%">#e91e63</td>
+  </tr>
+</table>
+</section>
+
+<!-- ================================================================ -->
+<section id="display-modes">
+<h2>Phenotype Display Modes</h2>
+
+<p>By default, pypedigree auto-detects how to render each phenotype column (binary vs. continuous). You can override this behaviour by adding a <strong>prefix</strong> to the column name in the header row. The prefix is stripped from the display name in legends and labels.</p>
+
+<h3>Prefix Reference</h3>
+<table>
+  <thead>
+    <tr><th>Prefix</th><th>Mode</th><th>Rendering</th><th>Use Case</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>b_</code></td>
+      <td>Binary</td>
+      <td>Color band when affected, white when unaffected, grey when unknown. No text by default.</td>
+      <td>Diagnoses, yes/no traits</td>
+    </tr>
+    <tr>
+      <td><code>g_</code></td>
+      <td>Gradient</td>
+      <td>White&rarr;color continuous gradient scale. Value labels shown inside band.</td>
+      <td>Quantitative scores (IQ, SRS, etc.)</td>
+    </tr>
+    <tr>
+      <td><code>o_</code></td>
+      <td>Outline</td>
+      <td>Colored shape border when affected, instead of a filled band. Does not consume band space.</td>
+      <td>Proband marker, secondary highlight</td>
+    </tr>
+    <tr>
+      <td><code>c_</code></td>
+      <td>Categorical</td>
+      <td>Distinct color per unique string value, shown as a colored band with label.</td>
+      <td>Diagnosis categories, subtypes</td>
+    </tr>
+    <tr>
+      <td><code>cr_</code></td>
+      <td>Carrier</td>
+      <td>Carrier status of one gene or condition: <code>0</code> not a carrier, <code>1</code> carrier, <code>2</code> obligate carrier. Drawn as a patterned section of the symbol, with its own legend row.</td>
+      <td>CFTR, HEXA, ATM carrier status</td>
+    </tr>
+    <tr>
+      <td><code>gi_</code></td><td><code>GRADIENT_INVERTED</code></td>
+      <td>Color&rarr;white gradient (inverted). High value = white, low value = full color. Use for metrics where low = bad (e.g., IQ: low IQ = red).</td>
+      <td>Any numeric</td>
+      <td>Color gradient bar (reversed direction)</td>
+    </tr>
+    <tr>
+      <td><code>a_</code></td><td><em>Annotation</em></td>
+      <td>Text annotation displayed below the individual's ID label. Not rendered as a phenotype band.</td>
+      <td>Any text string</td>
+      <td>Italic grey text below ID</td>
+    </tr>
+    <tr>
+      <td>(none)</td>
+      <td>Auto</td>
+      <td>Resolved once per column from all of its values: categorical if any value
+      is a string, gradient if any numeric value falls outside 0/1/2, binary otherwise.
+      A column therefore never mixes band types, and its legend row always matches
+      its bands.</td>
+      <td>Backward-compatible default</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Example Header with Prefixes</h3>
+<pre><code>FID  ID  Father  Mother  Sex  b_ASD  g_IQ  o_Proband  c_Diagnosis</code></pre>
+<p>This defines four phenotype columns:</p>
+<ul>
+  <li><strong>ASD</strong> &mdash; binary mode (filled/empty/grey bands)</li>
+  <li><strong>IQ</strong> &mdash; gradient mode (white-to-color scale with value label)</li>
+  <li><strong>Proband</strong> &mdash; outline mode (colored border when value is 1/2)</li>
+  <li><strong>Diagnosis</strong> &mdash; categorical mode (unique color per string value)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Prefix is stripped from display name</strong>
+  The prefix (<code>b_</code>, <code>g_</code>, <code>o_</code>, <code>c_</code>) is removed from the phenotype name shown in legends and labels. For example, <code>b_ASD</code> appears as "ASD" in the legend.
+</div>
+
+<h3>Complete Example File</h3>
+<pre><code>FID   ID        Father  Mother  Sex  b_ASD  g_IQ  o_Proband  c_Diagnosis
+FAM1  father    0       0       1    0      105   0          Control
+FAM1  mother    0       0       2    0      98    0          Control
+FAM1  child1    father  mother  1    2      72    1          ASD
+FAM1  child2    father  mother  2    1      110   0          Control</code></pre>
+
+<h3>Python API</h3>
+<p>The <code>PhenotypeDisplayMode</code> enum is exported from pypedigree and represents the five display modes:</p>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PhenotypeDisplayMode
+
+<span class="comment"># Available modes:</span>
+PhenotypeDisplayMode.AUTO         <span class="comment"># No prefix, auto-detect</span>
+PhenotypeDisplayMode.BINARY       <span class="comment"># b_ prefix</span>
+PhenotypeDisplayMode.GRADIENT     <span class="comment"># g_ prefix</span>
+PhenotypeDisplayMode.OUTLINE      <span class="comment"># o_ prefix</span>
+PhenotypeDisplayMode.CATEGORICAL  <span class="comment"># c_ prefix</span></code></pre>
+
+<div class="callout callout-tip">
+  <strong>Combining with smart header mapping</strong>
+  Prefixed column names work seamlessly with the smart header-based column mapping. Any column whose name (after alias matching) is not a known structural column is treated as a phenotype, and the prefix determines its display mode.
+</div>
+</section>
+
+<!-- ================================================================ -->
+<section id="annotations">
+<h2>Annotations</h2>
+
+<p>Annotations are text lines displayed below each individual's ID label. They are useful for showing variant names, gene names, or other per-individual notes.</p>
+
+<h3>Inline Annotations (a_ prefix)</h3>
+<p>Add columns with the <code>a_</code> prefix in the .ped header. The prefix is stripped for display; only the value is shown.</p>
+
+<pre><code>FID  IID  PAT  MAT  SEX  b_Autism  IQ  g_SRS  a_Gene1    a_Gene2
+196  001  002  003  1    2         90  90     DMXL2
+196  003  0    0    2    1         75  -9     DMXL2      CAMK2B
+196  006  002  003  1    2         70  87                CAMK2B</code></pre>
+
+<p>Missing values (<code>0</code>, <code>-9</code>, <code>NA</code>, empty) produce no annotation line. When annotations are present, the vertical spacing between generations is automatically increased to prevent overlap.</p>
+
+<h3>External Annotation File</h3>
+<p>Annotations can also be loaded from a separate TSV file via <code>--annotations PATH</code>:</p>
+
+<pre><code>IID    Gene1    Gene2
+001    DMXL2
+003    DMXL2    CAMK2B
+006             CAMK2B</code></pre>
+
+<h3>Python API</h3>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeBuilder
+
+builder = PedigreeBuilder(<span class="string">"FAM1"</span>)
+builder.add_individual(<span class="string">"001"</span>, sex=<span class="string">"male"</span>,
+                       annotations=[<span class="string">"DMXL2"</span>])
+builder.add_individual(<span class="string">"003"</span>, sex=<span class="string">"female"</span>,
+                       annotations=[<span class="string">"DMXL2"</span>, <span class="string">"CAMK2B"</span>])</code></pre>
+</section>
+
+<!-- ================================================================ -->
+<section id="carriers">
+<h2>Carrier Notation</h2>
+
+<p>pypedigree follows the NSGC focused revision of the standardized pedigree nomenclature (Bennett et al., <em>J Genet Couns</em> 2022;31(6):1238&ndash;48), which no longer marks carriers with a dot: the symbol is divided into as many sections as needed, and each carrier result gets its own fill pattern, defined in the legend. An affected carrier, or the carrier of two conditions, therefore shows every result.</p>
+
+<h3>Visual Representations</h3>
+<table>
+  <thead>
+    <tr><th>Status</th><th>Symbol (default, NSGC 2022)</th><th>Symbol (<code>carrier_notation: "legacy"</code>)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Carrier</td><td>Patterned section, one pattern per carrier source</td><td>Half-filled shape</td></tr>
+    <tr><td>Obligate carrier</td><td>The same pattern at half the density</td><td>Center dot</td></tr>
+    <tr><td>Affected carrier</td><td>Symbol split in two: filled section, then patterned section</td><td>Half-filled shape (the affected fill is not shown)</td></tr>
+  </tbody>
+</table>
+
+<p>Sections are vertical and ordered left to right: the affected section first, then one per carrier source in column order. A carrier of a single result has a fully patterned symbol. When phenotype bands are drawn, each carrier source is an extra band below them, at the same place for everyone.</p>
+
+<figure class="example-img">
+  <img src="imgs/examples/carrier_genes.png" alt="Carrier columns for two genes" style="max-width:450px">
+  <figcaption><code>carrier_genes.ped</code>: one <code>cr_</code> column per gene. The father carries both CFTR and HEXA; child1 is affected and an obligate CFTR carrier.</figcaption>
+</figure>
+
+<h3>File Format</h3>
+<p>Carrier status comes from the <code>carrier</code> column and from any number of <code>cr_</code> columns (one per gene or condition, e.g. <code>cr_CFTR</code>). Each is a separate carrier source, with its own pattern and legend row, and accepts:</p>
+<table>
+  <thead>
+    <tr><th>Value</th><th>Meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>0</code></td><td>Not a carrier</td></tr>
+    <tr><td><code>1</code></td><td>Carrier (heterozygous)</td></tr>
+    <tr><td><code>2</code></td><td>Obligate carrier, as declared in the file (pypedigree does not infer it)</td></tr>
+    <tr><td><code>-9</code>, <code>NA</code>, empty</td><td>Unknown (<code>cr_</code> columns only): no section, or an &ldquo;NA&rdquo; band</td></tr>
+  </tbody>
+</table>
+
+<h4>Example with carrier columns</h4>
+<pre><code>family_id  sample_id  father  mother  sex  pheno  cr_CFTR  cr_HEXA
+FAM1       father     0       0       1    1      1        1
+FAM1       mother     0       0       2    2      0        0
+FAM1       son        father  mother  1    2      2        0
+FAM1       daughter   father  mother  2    1      0        -9</code></pre>
+
+<h3>Programmatic API (PedigreeBuilder)</h3>
+<p>Use the <code>carrier</code> and <code>obligate_carrier</code> parameters of <code>add_individual()</code> for the <code>carrier</code> column, and <code>cr_</code>-prefixed keys in <code>phenotypes</code> for per-gene status:</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeBuilder
+
+builder = PedigreeBuilder(<span class="string">"FAM1"</span>)
+builder.add_individual(<span class="string">"father"</span>, sex=<span class="string">"male"</span>, carrier=<span class="keyword">True</span>)
+builder.add_individual(<span class="string">"mother"</span>, sex=<span class="string">"female"</span>, phenotypes={<span class="string">"cr_CFTR"</span>: <span class="num">1</span>})
+builder.add_individual(<span class="string">"child"</span>, sex=<span class="string">"female"</span>,
+    father=<span class="string">"father"</span>, mother=<span class="string">"mother"</span>,
+    obligate_carrier=<span class="keyword">True</span>)
+fig = builder.render(output=<span class="string">"carriers.png"</span>)</code></pre>
+
+<h3>Legacy notation</h3>
+<p>The pre-2022 notation stays available for the <code>carrier</code> column: <code>PedigreeStyle(carrier_notation=<span class="string">"legacy"</span>)</code>, <code>"carrier_notation": "legacy"</code> in a style file, or <code>--carrier-notation legacy</code> on the command line. <code>cr_</code> columns are still drawn as patterned sections. The radius of the legacy center dot is set by <code>carrier_dot_radius</code> (default <code>0.08</code>).</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="notation">
+<h2>Standard Notation</h2>
+
+<p>Beyond sex, affection status, death, twins and carriers, pypedigree draws the other symbols of the NSGC nomenclature (Bennett et al., <em>J Genet Couns</em> 2008;17:424&ndash;33, and its 2022 revision centred on sex and gender) in the PNG and the interactive SVG, in both layouts. Each comes from one column, recognised by name in the header row.</p>
+
+<figure class="example-img">
+  <img src="imgs/examples/nomenclature.png" alt="Standard notation symbols" style="max-width:650px">
+  <figcaption><code>nomenclature.ped</code> (family FAM1): infertility and childlessness by choice (II-1, II-5), the consultand (II-2), a transgender woman and a non-binary person (II-4, II-5), a miscarriage (II-6); children adopted in and out (III-2, III-3), a stillbirth, an affected termination, an ectopic pregnancy and an ongoing pregnancy (III-4 to III-7).</figcaption>
+</figure>
+
+<h3>Columns and codes</h3>
+<p>Column names and codes are case-insensitive (aliases in brackets). <code>0</code>, <code>-9</code>, <code>NA</code>, <code>.</code> or an empty cell mean nothing to note; any other value is an error naming the line.</p>
+<table>
+  <thead>
+    <tr><th>Column</th><th>Codes</th><th>Drawn as</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>pregnancy</code> (<code>pregnancy_outcome</code>, <code>outcome</code>)</td><td><code>P</code> ongoing, <code>SAB</code> miscarriage, <code>TOP</code> termination, <code>ECT</code> ectopic, <code>SB</code> stillbirth</td><td><code>P</code>: &ldquo;P&rdquo; inside the symbol. <code>SAB</code>, <code>TOP</code>, <code>ECT</code>: a triangle, filled when affected, struck through for a termination, &ldquo;ECT&rdquo; below. <code>SB</code>: the symbol struck through, &ldquo;SB&rdquo; below</td></tr>
+    <tr><td><code>adopted</code> (<code>adoption</code>)</td><td><code>in</code> / <code>1</code> (parents given are adoptive), <code>out</code> / <code>2</code> (they are biological)</td><td>Brackets around the symbol; the line to adoptive parents is dashed</td></tr>
+    <tr><td><code>childless</code> (<code>childlessness</code>, <code>infertility</code>)</td><td><code>choice</code> / <code>1</code>, <code>infertility</code> / <code>2</code></td><td>A line below the symbol ending in one bar (no children by choice or reason unknown), or two (infertility)</td></tr>
+    <tr><td><code>art</code> (<code>assisted_reproduction</code>)</td><td><code>D</code> gamete donor, <code>S</code> surrogate (<code>GC</code> accepted)</td><td>&ldquo;D&rdquo; or &ldquo;S&rdquo; inside the symbol</td></tr>
+    <tr><td><code>gender_identity</code> (<code>identity</code>)</td><td><code>man</code>, <code>woman</code>, <code>nonbinary</code> (also <code>M</code>/<code>F</code>/<code>NB</code>, <code>1</code>/<code>2</code>/<code>3</code>)</td><td>The symbol follows the gender identity (square, circle, diamond); <code>sex</code> becomes the sex assigned at birth, written below as AMAB or AFAB when the two differ</td></tr>
+    <tr><td><code>consultand</code></td><td><code>1</code></td><td>An arrow without &ldquo;P&rdquo;</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-info">
+  <strong>The <code>gender</code> column</strong>
+  A column named <code>gender</code> is the sex column, as before, unless the header also has a <code>sex</code> column: then it is the gender identity.
+</div>
+
+<p>Gestational age, karyotype or the reason for infertility go in <code>a_</code> annotation columns. Notes (&ldquo;SB&rdquo;, &ldquo;ECT&rdquo;, &ldquo;AMAB&rdquo;) are written under the ID label, before annotations. A pregnancy-loss triangle has no room for phenotype bands: in a figure with bands it takes the color of the individual's first band. On a symbol with bands, which carry text of their own, the letter &ldquo;P&rdquo;, &ldquo;D&rdquo; or &ldquo;S&rdquo; moves beside the upper-right corner.</p>
+
+<h3>Programmatic API</h3>
+<pre><code>builder.add_individual(<span class="string">"c1"</span>, father=<span class="string">"f"</span>, mother=<span class="string">"m"</span>, pregnancy=<span class="string">"SAB"</span>, annotations=[<span class="string">"8 wk"</span>])
+builder.add_individual(<span class="string">"c2"</span>, sex=<span class="string">"male"</span>, father=<span class="string">"f"</span>, mother=<span class="string">"m"</span>, gender=<span class="string">"woman"</span>, adopted=<span class="string">"in"</span>)</code></pre>
+<p><code>build_notation()</code> turns the same codes into a <code>Notation</code>, the frozen dataclass attached to every <code>Individual</code> and <code>NodeLayout</code>.</p>
+
+<h3>Not covered</h3>
+<p>The diagonal lines that join a gamete donor or a surrogate to a pregnancy in the NSGC figures: in a pedigree file a donor is a parent and is joined to the other parent like any couple. Several individuals in one symbol (&ldquo;n&rdquo;), documented evaluation (&ldquo;*&rdquo;), the asymptomatic-carrier vertical line, and childlessness of a couple (the marker hangs from one individual).</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="interactive-svg">
+<h2>Interactive SVG Export</h2>
+
+<p>pypedigree can generate interactive SVG files with built-in tooltips, click-to-highlight, and zoom/pan capabilities. Interactive SVGs are self-contained HTML/SVG files that work in any modern browser with <strong>no additional dependencies</strong>.</p>
+
+<h3>Features</h3>
+<ul>
+  <li><strong>Tooltips on hover</strong> &mdash; Hovering over an individual displays their sample ID, sex, phenotype, and other metadata.</li>
+  <li><strong>Click to highlight relatives</strong> &mdash; Clicking an individual highlights their parents, children, and partners.</li>
+  <li><strong>Zoom and pan</strong> &mdash; Mouse wheel to zoom, Ctrl+drag (or middle-button drag) to pan around large pedigrees.</li>
+  <li><strong>No extra dependencies</strong> &mdash; All interactivity is embedded as inline JavaScript within the SVG file.</li>
+</ul>
+
+<h3>Same figure as the PNG</h3>
+<p>The interactive SVG draws everything the PNG/PDF output draws: phenotype
+bands (binary, gradient, diverging, categorical), <code>o_</code> outline
+colors, PGS distribution curves, <code>a_</code> annotations, carrier notation
+and the legend (hidden with <code>--no-legend</code>). Both renderers take
+their decisions from the same code (<code>pypedigree.phenotypes</code> and
+<code>pypedigree.carriers</code>), so the two outputs always agree. Several
+families are drawn side by side, each with its title.</p>
+<p>Each individual's tooltip also lists every value, for example
+<code>ID: 1 | Sex: Male | Phenotype: Affected | IQ: 90 | Dx: ASD</code>.
+The circular layout (<code>--circular</code>) is not available in interactive
+mode.</p>
+
+<h3>CLI Usage</h3>
+<p>Use the <code>--interactive</code> flag to generate an interactive SVG instead of a static image:</p>
+<pre><code>pypedigree family.ped --interactive -o pedigree.svg</code></pre>
+
+<div class="callout callout-info">
+  <strong>Output format</strong>
+  The <code>--interactive</code> flag automatically produces SVG output. If the output path has a different extension, it will be overridden to <code>.svg</code>.
+</div>
+
+<h3>Python API</h3>
+
+<h4><code>render_interactive_svg(pedigree, ...)</code></h4>
+<p>Render all families in a pedigree as an interactive SVG. Returns the SVG markup as a string.</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, render_interactive_svg
+
+ped = parse_pedigree(<span class="string">"family.ped"</span>)
+svg_str = render_interactive_svg(ped, output=<span class="string">"interactive.svg"</span>)</code></pre>
+
+<h4><code>PedigreeBuilder.render_interactive_svg(output=None, *, style=None, show_labels=True, show_legend=True)</code></h4>
+<p>Build and render as an interactive SVG from the builder API:</p>
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeBuilder
+
+builder = PedigreeBuilder(<span class="string">"FAM1"</span>)
+builder.add_individual(<span class="string">"father"</span>, sex=<span class="string">"male"</span>)
+builder.add_individual(<span class="string">"mother"</span>, sex=<span class="string">"female"</span>)
+builder.add_individual(<span class="string">"child"</span>, sex=<span class="string">"male"</span>,
+    father=<span class="string">"father"</span>, mother=<span class="string">"mother"</span>,
+    phenotype=<span class="string">"affected"</span>)
+svg_str = builder.render_interactive_svg(output=<span class="string">"interactive.svg"</span>)</code></pre>
+</section>
+
+<!-- ================================================================ -->
+<section id="styling">
+<h2>Styling &amp; Configuration</h2>
+
+<p>All visual parameters are controlled through the <code>PedigreeStyle</code> dataclass. Styles can be set in Python or loaded from a JSON file via <code>--style</code>.</p>
+
+<h3>PedigreeStyle Parameters</h3>
+
+<table>
+  <thead>
+    <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>shape_size</code></td><td>float</td><td>0.8</td><td>Individual shape side length</td></tr>
+    <tr><td><code>shape_line_width</code></td><td>float</td><td>1.5</td><td>Shape outline width</td></tr>
+    <tr><td><code>fill_color</code></td><td>str</td><td>"black"</td><td>Affected individual fill color</td></tr>
+    <tr><td><code>outline_color</code></td><td>str</td><td>"black"</td><td>Shape and marker outline color</td></tr>
+    <tr><td><code>phantom_line_style</code></td><td>str</td><td>"--"</td><td>Line style for phantom parents</td></tr>
+    <tr><td><code>line_color</code></td><td>str</td><td>"black"</td><td>Connection line color</td></tr>
+    <tr><td><code>line_width</code></td><td>float</td><td>1.0</td><td>Connection line width</td></tr>
+    <tr><td><code>double_line_gap</code></td><td>float</td><td>0.06</td><td>Gap between consanguinity double lines</td></tr>
+    <tr><td><code>broken_gap_size</code></td><td>float</td><td>0.15</td><td>Gap size in broken relationship lines</td></tr>
+    <tr><td><code>font_size</code></td><td>float</td><td>8.0</td><td>Label and text font size, in points. The legend panel is sized from it (text, swatches and row height), so raise it to keep a figure legible once scaled down for print</td></tr>
+    <tr><td><code>font_family</code></td><td>str</td><td>"sans-serif"</td><td>Font family for all text</td></tr>
+    <tr><td><code>label_offset</code></td><td>float</td><td>0.15</td><td>Distance below shape for label</td></tr>
+    <tr><td><code>generation_gap</code></td><td>float</td><td>2.0</td><td>Vertical spacing between generations</td></tr>
+    <tr><td><code>sibling_gap</code></td><td>float</td><td>1.5</td><td>Horizontal spacing between siblings</td></tr>
+    <tr><td><code>couple_gap</code></td><td>float</td><td>1.5</td><td>Horizontal spacing between partners</td></tr>
+    <tr><td><code>min_node_distance</code></td><td>float</td><td>1.2</td><td>Minimum horizontal distance between any two nodes</td></tr>
+    <tr><td><code>phenotype_colors</code></td><td>dict</td><td>{}</td><td>Phenotype name &rarr; hex color mapping</td></tr>
+    <tr><td><code>dpi</code></td><td>int</td><td>150</td><td>Output resolution</td></tr>
+    <tr><td><code>fig_width</code></td><td>float</td><td>10.0</td><td>Default figure width (inches)</td></tr>
+    <tr><td><code>fig_height</code></td><td>float</td><td>8.0</td><td>Default figure height (inches)</td></tr>
+    <tr><td><code>margin</code></td><td>float</td><td>0.5</td><td>Figure margin (inches)</td></tr>
+    <tr><td><code>carrier_notation</code></td><td>str</td><td>"nsgc2022"</td><td><code>"nsgc2022"</code>: patterned sections, one per carrier result (Bennett et al. 2022). <code>"legacy"</code>: half-filled shape and center dot</td></tr>
+    <tr><td><code>carrier_dot_radius</code></td><td>float</td><td>0.08</td><td>Radius of the center dot for obligate carriers (legacy notation)</td></tr>
+    <tr><td><code>show_phenotype_labels</code></td><td>bool</td><td>False</td><td>Show YES/NO text inside binary phenotype bands</td></tr>
+    <tr><td><code>pgs_colors</code></td><td>dict</td><td>{}</td><td>Map of PGS column name to hex color for marker line (e.g. <code>{"PGS_autism": "#3498db"}</code>)</td></tr>
+    <tr><td><code>gradient_range</code></td><td>dict</td><td>{}</td><td>Custom min/max for gradient normalization (e.g. <code>{"SRS": [40, 90]}</code>)</td></tr>
+    <tr><td><code>gradient_diverging</code></td><td>dict</td><td>{}</td><td>Tricolor diverging gradient config (e.g. <code>{"IQ": {"min": 40, "mid": 100, "max": 160, "color_low": "#e74c3c", "color_high": "#2ecc71"}}</code>)</td></tr>
+    <tr><td><code>zero_pad_ids</code></td><td>int</td><td>0</td><td>Zero-pad individual IDs to this width (0 = no padding, 3 = "001")</td></tr>
+    <tr><td><code>radial_gap</code></td><td>float</td><td>2.5</td><td>Radial spacing between concentric rings (circular layout)</td></tr>
+    <tr><td><code>base_radius</code></td><td>float</td><td>3.0</td><td>Radius of first generation ring (circular layout)</td></tr>
+  </tbody>
+</table>
+
+<h3>JSON Style File Example</h3>
+<pre><code>{
+  <span class="string">"shape_size"</span>: <span class="num">1.0</span>,
+  <span class="string">"font_size"</span>: <span class="num">10</span>,
+  <span class="string">"outline_color"</span>: <span class="string">"#888888"</span>,
+  <span class="string">"generation_gap"</span>: <span class="num">2.5</span>,
+  <span class="string">"dpi"</span>: <span class="num">300</span>,
+  <span class="string">"phenotype_colors"</span>: {
+    <span class="string">"epilepsy"</span>: <span class="string">"#e74c3c"</span>,
+    <span class="string">"IQ"</span>: <span class="string">"#3498db"</span>
+  },
+  <span class="string">"pgs_colors"</span>: {
+    <span class="string">"PGS_autism"</span>: <span class="string">"#3498db"</span>,
+    <span class="string">"PGS_IQ"</span>: <span class="string">"#e74c3c"</span>,
+    <span class="string">"PGS_ADHD"</span>: <span class="string">"#e67e22"</span>
+  },
+  <span class="string">"gradient_range"</span>: {
+    <span class="string">"SRS"</span>: [40, 90]
+  },
+  <span class="string">"gradient_diverging"</span>: {
+    <span class="string">"IQ"</span>: {
+      <span class="string">"min"</span>: 40, <span class="string">"mid"</span>: 100, <span class="string">"max"</span>: 160,
+      <span class="string">"color_low"</span>: <span class="string">"#e74c3c"</span>, <span class="string">"color_high"</span>: <span class="string">"#2ecc71"</span>
+    }
+  },
+  <span class="string">"zero_pad_ids"</span>: 3
+}</code></pre>
+
+<h3>Auto-Scaling</h3>
+<p>For large pedigrees, the figure size is automatically scaled based on the layout bounds. The <code>fig_width</code> and <code>fig_height</code> values serve as minimums; actual dimensions grow with the number of individuals and generations.</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="plink">
+<h2>PLINK Integration</h2>
+
+<p>pypedigree provides native support for PLINK bioinformatics file formats, enabling seamless interoperability with tools like PLINK, KING, GCTA, and other genetics software.</p>
+
+<h3>Reading .fam Files</h3>
+<p>PLINK <code>.fam</code> files use the standard 6-column pedigree format (FID, IID, PAT, MAT, SEX, PHENO), whitespace-delimited, with no header row. Files with the <code>.fam</code> extension are auto-detected by the CLI.</p>
+
+<pre><code># Python API
+from pypedigree import parse_fam_file, render_pedigree
+
+ped = parse_fam_file("family.fam")
+render_pedigree(ped, output="family.png")
+
+# CLI — .fam extension is auto-detected
+# pypedigree family.fam -o family.png</code></pre>
+
+<h3>Reading PLINK .ped Files</h3>
+<p>PLINK <code>.ped</code> files have 6 standard columns followed by genotype data (pairs of alleles). Use <code>parse_plink_ped()</code> or the <code>--plink</code> CLI flag to read only the pedigree columns and ignore genotype data.</p>
+
+<pre><code># Python API
+from pypedigree import parse_plink_ped
+
+ped = parse_plink_ped("family.ped")
+
+# CLI — use --plink flag
+# pypedigree family.ped --plink -o family.png</code></pre>
+
+<h3>Exporting to .fam</h3>
+<p>Export a <code>Pedigree</code> to PLINK <code>.fam</code> format for use with external tools. Internal constructs (phantom parents, duplicate nodes) are automatically excluded, and references are resolved back to original IDs.</p>
+
+<pre><code>from pypedigree import parse_pedigree, export_fam
+
+ped = parse_pedigree("family.ped")
+export_fam(ped, "output.fam")  # Ready for PLINK/KING</code></pre>
+
+<h3>API Reference</h3>
+<table>
+<tr><th>Function</th><th>Description</th></tr>
+<tr><td><code>parse_fam_file(path)</code></td><td>Parse a PLINK .fam file (6 columns, no header)</td></tr>
+<tr><td><code>parse_plink_ped(path)</code></td><td>Parse a PLINK .ped file (ignores genotype columns)</td></tr>
+<tr><td><code>export_fam(pedigree, path)</code></td><td>Export to .fam format (tab-delimited, 6 columns)</td></tr>
+</table>
+</section>
+
+<!-- ================================================================ -->
+<section id="layout-engine">
+<h2>Layout Engine</h2>
+
+<p>The layout engine computes (x, y) coordinates for all individuals and connection lines. It has <strong>no matplotlib dependency</strong> and produces pure numeric <code>FamilyLayout</code> objects.</p>
+
+<h3>Pipeline</h3>
+<ol>
+  <li><strong>Assign generations</strong> &mdash; BFS from founders, children one generation below parents. Partners aligned to same generation, then propagated until every child sits below both parents. A duplicate node stands on the generation of the individual it repeats. Uses a parent&rarr;child adjacency index.</li>
+  <li><strong>Compute horizontal positions</strong> &mdash; Each union's descendants form a block. Sibling blocks are packed left to right against each other's contours, generation by generation, and every couple is centred over its children. A married twin's partner stands on the outer side of the twin group, so no spouse is drawn between twins.</li>
+  <li><strong>Break tangled loops</strong> &mdash; When both partners descend from people in the pedigree (consanguinity, marriages between branches), they are drawn side by side and the second partner's sibship line stretches to reach them. Siblings are ordered so that the two branches of a loop meet, which keeps that line clear in most pedigrees. Where it would still overlap another sibship, the partner is drawn twice instead: among their siblings, and as a duplicate next to their partner, joined by a dotted arc, as the nomenclature allows.</li>
+  <li><strong>Build geometry</strong> &mdash; Compute node positions, connection edges (relationship, descent, sibship, individual lines), twin connectors, and duplicate arcs. Every line is horizontal or vertical, as the standard nomenclature requires: a single child that is not centred under its parents (possible only in a loop) hangs from a short sibship-level segment rather than a diagonal.</li>
+</ol>
+
+<div class="callout callout-info">
+  <strong>Guarantees</strong>
+  Nodes on a row stay at least <code>sibling_gap</code> apart (<code>couple_gap</code> between partners), and the sibship lines of two different couples never overlap, so every child can be traced to its parents. The test suite checks both on every fixture and on generated pedigrees of up to 200 individuals, with and without loops. The same rules apply at every size.
+</div>
+
+<h3>Performance</h3>
+<table>
+  <thead>
+    <tr><th>Pedigree Size</th><th>Layout Time</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>9 individuals</td><td>&lt; 1ms</td><td>Typical clinical pedigree</td></tr>
+    <tr><td>45 individuals</td><td>&lt; 1ms</td><td>Extended family</td></tr>
+    <tr><td>100 individuals</td><td>&asymp; 1ms</td><td>Including loop breaking</td></tr>
+    <tr><td>200 individuals</td><td>&asymp; 2ms</td><td>Large research pedigree</td></tr>
+    <tr><td>500 individuals</td><td>&asymp; 5ms</td><td>Densely interbred, many loops</td></tr>
+  </tbody>
+</table>
+
+<h3>Pedigree Symbols</h3>
+<table>
+  <thead>
+    <tr><th>Symbol</th><th>Meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Square &#9633;</td><td>Male</td></tr>
+    <tr><td>Circle &#9675;</td><td>Female</td></tr>
+    <tr><td>Diamond &#9671;</td><td>Unknown sex</td></tr>
+    <tr><td>Filled shape</td><td>Affected</td></tr>
+    <tr><td>Empty shape</td><td>Unaffected</td></tr>
+    <tr><td>Diagonal line through shape</td><td>Deceased</td></tr>
+    <tr><td>Arrow below shape</td><td>Proband (index case)</td></tr>
+    <tr><td>Double horizontal line</td><td>Consanguineous union</td></tr>
+    <tr><td>Broken horizontal line</td><td>Dissolved/broken union</td></tr>
+    <tr><td>Patterned section</td><td>Carrier, one pattern per carrier source (NSGC 2022)</td></tr>
+    <tr><td>Sparser pattern</td><td>Obligate carrier (NSGC 2022)</td></tr>
+    <tr><td>Half-filled shape / center dot</td><td>Carrier / obligate carrier (legacy notation)</td></tr>
+    <tr><td>Dashed shape outline</td><td>Phantom (inferred) parent</td></tr>
+    <tr><td>Horizontal bar between twins</td><td>Monozygotic twins</td></tr>
+    <tr><td>V-lines from descent line</td><td>Dizygotic twins</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ================================================================ -->
+<section id="models">
+<h2>Data Models</h2>
+
+<h3>Enums</h3>
+
+<h4><code>Sex</code></h4>
+<dl class="param-list">
+  <dt>Sex.MALE = 1</dt><dd>Male individual (rendered as square).</dd>
+  <dt>Sex.FEMALE = 2</dt><dd>Female individual (rendered as circle).</dd>
+  <dt>Sex.UNKNOWN = 0</dt><dd>Unknown sex (rendered as diamond).</dd>
+</dl>
+
+<h4><code>Phenotype</code></h4>
+<dl class="param-list">
+  <dt>Phenotype.UNAFFECTED = 1</dt><dd>Unaffected (empty shape).</dd>
+  <dt>Phenotype.AFFECTED = 2</dt><dd>Affected (filled shape).</dd>
+  <dt>Phenotype.UNKNOWN = 0</dt><dd>Unknown status.</dd>
+</dl>
+
+<h4><code>PhenotypeDisplayMode</code></h4>
+<dl class="param-list">
+  <dt>PhenotypeDisplayMode.AUTO = "auto"</dt><dd>Auto-detect from data (default, no prefix).</dd>
+  <dt>PhenotypeDisplayMode.BINARY = "binary"</dt><dd>Binary rendering: color/white/grey bands (<code>b_</code> prefix).</dd>
+  <dt>PhenotypeDisplayMode.GRADIENT = "gradient"</dt><dd>Continuous gradient scale with value labels (<code>g_</code> prefix).</dd>
+  <dt>PhenotypeDisplayMode.OUTLINE = "outline"</dt><dd>Colored shape border when affected (<code>o_</code> prefix).</dd>
+  <dt>PhenotypeDisplayMode.CATEGORICAL = "categorical"</dt><dd>Distinct color per unique string value (<code>c_</code> prefix).</dd>
+</dl>
+
+<h4>Notation enums</h4>
+<dl class="param-list">
+  <dt>Pregnancy</dt><dd><code>ONGOING ("P")</code>, <code>MISCARRIAGE ("SAB")</code>, <code>TERMINATION ("TOP")</code>, <code>ECTOPIC ("ECT")</code>, <code>STILLBIRTH ("SB")</code>.</dd>
+  <dt>Adoption</dt><dd><code>IN</code>, <code>OUT</code>.</dd>
+  <dt>Childlessness</dt><dd><code>BY_CHOICE</code>, <code>INFERTILITY</code>.</dd>
+  <dt>ReproductiveRole</dt><dd><code>DONOR ("D")</code>, <code>SURROGATE ("S")</code>.</dd>
+  <dt>Gender</dt><dd><code>MAN</code>, <code>WOMAN</code>, <code>NONBINARY</code>: decides the symbol.</dd>
+</dl>
+<p>They are grouped in <code>Notation</code> (<code>pregnancy</code>, <code>adoption</code>, <code>childlessness</code>, <code>reproductive_role</code>, <code>gender</code>, <code>is_consultand</code>), the <code>notation</code> field of <code>Individual</code> and <code>NodeLayout</code>. <code>NodeLayout</code> also carries <code>notes</code> (text written under the label) and <code>marker_depth</code> (room taken by a childlessness marker); <code>EdgeType.CHILDLESS</code> marks that marker's segments.</p>
+
+<h4><code>TwinType</code></h4>
+<dl class="param-list">
+  <dt>TwinType.MONOZYGOTIC = "MZ"</dt><dd>Identical twins (horizontal bar connector).</dd>
+  <dt>TwinType.DIZYGOTIC = "DZ"</dt><dd>Fraternal twins (plain V-lines).</dd>
+  <dt>TwinType.UNKNOWN = "TW"</dt><dd>Unknown zygosity (? marker).</dd>
+</dl>
+
+<h3>Core Classes</h3>
+
+<h4><code>Individual</code></h4>
+<p>Represents one person in the pedigree.</p>
+<dl class="param-list">
+  <dt>sample_id: str</dt><dd>Unique identifier.</dd>
+  <dt>family_id: str</dt><dd>Family this individual belongs to.</dd>
+  <dt>sex: Sex</dt><dd>Biological sex.</dd>
+  <dt>phenotype: Phenotype</dt><dd>Affected/unaffected status.</dd>
+  <dt>father_id: str | None</dt><dd>Father's sample_id (None if unknown).</dd>
+  <dt>mother_id: str | None</dt><dd>Mother's sample_id (None if unknown).</dd>
+  <dt>is_deceased: bool</dt><dd>Deceased marker.</dd>
+  <dt>is_proband: bool</dt><dd>Proband/index case marker.</dd>
+  <dt>is_phantom: bool</dt><dd>Inferred parent (dashed outline).</dd>
+  <dt>is_carrier: bool</dt><dd>Carrier (heterozygous), from the <code>carrier</code> column.</dd>
+  <dt>is_obligate_carrier: bool</dt><dd>Obligate carrier, from the <code>carrier</code> column.</dd>
+  <dt>twin_info: list[TwinInfo]</dt><dd>Twin relationships.</dd>
+  <dt>extra_phenotypes: dict[str, float | None]</dt><dd>Normalized extra phenotype values [0, 1].</dd>
+  <dt>extra_phenotypes_raw: dict[str, float | None]</dt><dd>Raw (original) extra phenotype values.</dd>
+  <dt>is_founder: bool (property)</dt><dd>True if no known parents.</dd>
+</dl>
+
+<h4><code>Union</code></h4>
+<p>Represents a mating relationship between two individuals.</p>
+<dl class="param-list">
+  <dt>partner_ids: tuple[str, str]</dt><dd>The two partner sample IDs.</dd>
+  <dt>children_ids: list[str]</dt><dd>Children from this union.</dd>
+  <dt>is_consanguinous: bool</dt><dd>Consanguineous relationship (double line).</dd>
+  <dt>is_broken: bool</dt><dd>Dissolved relationship (broken line).</dd>
+</dl>
+
+<h4><code>Family</code></h4>
+<p>A collection of related individuals and their unions.</p>
+<dl class="param-list">
+  <dt>family_id: str</dt><dd>Family identifier.</dd>
+  <dt>individuals: dict[str, Individual]</dt><dd>Map of sample_id &rarr; Individual.</dd>
+  <dt>unions: list[Union]</dt><dd>All unions in this family.</dd>
+  <dt>get_founders() &rarr; list[Individual]</dt><dd>Return individuals with no known parents.</dd>
+  <dt>get_children(parent_id) &rarr; list[Individual]</dt><dd>Return all children of a parent.</dd>
+  <dt>get_union_for_parents(father_id, mother_id) &rarr; Union | None</dt><dd>Find the union for a parent pair.</dd>
+  <dt>get_unions_for_individual(sample_id) &rarr; list[Union]</dt><dd>Get all unions involving an individual.</dd>
+</dl>
+
+<h4><code>Pedigree</code></h4>
+<p>Top-level container holding one or more families.</p>
+<dl class="param-list">
+  <dt>families: dict[str, Family]</dt><dd>Map of family_id &rarr; Family.</dd>
+  <dt>phenotype_names: list[str]</dt><dd>Ordered list of extra phenotype names.</dd>
+  <dt>family_ids: list[str] (property)</dt><dd>List of all family IDs.</dd>
+  <dt>get_family(family_id) &rarr; Family | None</dt><dd>Get a family by ID.</dd>
+</dl>
+
+<h3>Layout Classes</h3>
+
+<h4><code>FamilyLayout</code></h4>
+<p>Complete layout result for one family.</p>
+<dl class="param-list">
+  <dt>family_id: str</dt><dd>Family identifier.</dd>
+  <dt>nodes: list[NodeLayout]</dt><dd>Positioned individuals.</dd>
+  <dt>edges: list[EdgeLayout]</dt><dd>Positioned connection lines.</dd>
+  <dt>twin_connectors: list[TwinConnector]</dt><dd>Twin connection geometry.</dd>
+  <dt>duplicate_arcs: list[DuplicateArc]</dt><dd>Arcs connecting duplicate nodes.</dd>
+</dl>
+
+<h4><code>NodeLayout</code></h4>
+<dl class="param-list">
+  <dt>individual_id: str</dt><dd>Sample ID.</dd>
+  <dt>x: float, y: float</dt><dd>Position coordinates.</dd>
+  <dt>sex: Sex</dt><dd>For shape selection.</dd>
+  <dt>phenotype: Phenotype</dt><dd>For fill.</dd>
+  <dt>label: str</dt><dd>Display text.</dd>
+</dl>
+
+<h4><code>EdgeLayout</code></h4>
+<dl class="param-list">
+  <dt>start: tuple[float, float]</dt><dd>Start point (x, y).</dd>
+  <dt>end: tuple[float, float]</dt><dd>End point (x, y).</dd>
+  <dt>edge_type: EdgeType</dt><dd>Type: relationship, descent, sibship, or individual.</dd>
+  <dt>line_style: LineStyle</dt><dd>Style: solid, double, broken, or dashed.</dd>
+</dl>
+</section>
+
+<!-- ================================================================ -->
+<section id="examples">
+<h2>Gallery</h2>
+
+<h3>Simple Trio</h3>
+<figure class="example-img">
+  <img src="imgs/examples/simple_trio.png" alt="Simple trio" style="max-width:300px">
+  <figcaption>Father, mother, and affected child</figcaption>
+</figure>
+
+<h3>Three Generations</h3>
+<figure class="example-img">
+  <img src="imgs/examples/three_gen.png" alt="Three generations" style="max-width:500px">
+  <figcaption>Grandparents, parents, and children across three generations</figcaption>
+</figure>
+
+<h3>Monozygotic Twins</h3>
+<figure class="example-img">
+  <img src="imgs/examples/twins_mz.png" alt="Monozygotic twins" style="max-width:350px">
+  <figcaption>Monozygotic (identical) twins connected by a horizontal bar</figcaption>
+</figure>
+
+<h3>Consanguinity</h3>
+<figure class="example-img">
+  <img src="imgs/examples/consanguinity.png" alt="Consanguinity" style="max-width:500px">
+  <figcaption>First-cousin marriage shown with double relationship line</figcaption>
+</figure>
+
+<h3>Standard Notation</h3>
+<figure class="example-img">
+  <img src="imgs/examples/nomenclature.png" alt="Standard notation" style="max-width:650px">
+  <figcaption>Pregnancies and losses, adoption, childlessness, gender identity and the consultand (<code>nomenclature.ped</code>)</figcaption>
+</figure>
+
+<h3>Deceased Individuals</h3>
+<figure class="example-img">
+  <img src="imgs/examples/deceased.png" alt="Deceased" style="max-width:350px">
+  <figcaption>Deceased individuals marked with diagonal line through shape</figcaption>
+</figure>
+
+<h3>Multi-Phenotype with Bands</h3>
+<figure class="example-img">
+  <img src="imgs/examples/multi_phenotype.png" alt="Multi-phenotype" style="max-width:450px">
+  <figcaption>Three phenotypes displayed as colored bands within each shape</figcaption>
+</figure>
+
+<h3>Multi-Phenotype with PGS</h3>
+<figure class="example-img">
+  <img src="imgs/examples/multi_phenotype_pgs.png" alt="PGS" style="max-width:500px">
+  <figcaption>Phenotype bands combined with PGS Gaussian distribution curves</figcaption>
+</figure>
+
+<h3>Annotations with Multi-PGS</h3>
+<figure class="example-img">
+  <img src="imgs/examples/annotations.png" alt="Annotations with multi-PGS" style="max-width:700px">
+  <figcaption>Annotations (gene names below IDs), diverging gradient (IQ), multi-PGS (colored markers), and zero-padded IDs</figcaption>
+</figure>
+
+<h3>Five Generations with Loops (81 individuals)</h3>
+<figure class="example-img">
+  <img src="imgs/examples/multigenerational.png" alt="Five-generation pedigree with two loops" style="max-width:100%">
+  <figcaption><code>multigenerational.ped</code> (synthetic): a first-cousin marriage (401 &times; 406) and a marriage between two branches (412 &times; 429), both drawn side by side with no duplicated individual, because each sibship is ordered so the branches of a loop meet. Binary, gradient and carrier bands, both kinds of twins, deceased individuals, a miscarriage and an adoption. Open it with <code>--interactive</code> to zoom in.</figcaption>
+</figure>
+<figure class="example-img">
+  <img src="imgs/examples/multigenerational_detail.png" alt="Detail of the first-cousin loop" style="max-width:100%">
+  <figcaption>Detail: 401 and 406 are first cousins, grandchildren of 201. Their parents' sibships are ordered so they meet: 401 is the last of his sibship, 406 the first of hers. Their affected children (501, the proband, and 504) are below a double line; 502 is a carrier, 503 a miscarriage.</figcaption>
+</figure>
+</section>
+
+<!-- ================================================================ -->
+<section id="errors">
+<h2>Error Handling</h2>
+
+<p>All pypedigree exceptions inherit from <code>PedigreeError</code>:</p>
+
+<table>
+  <thead>
+    <tr><th>Exception</th><th>When</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>PedigreeParseError</code></td><td>File parsing failures (bad format, missing columns, invalid values)</td></tr>
+    <tr><td><code>PedigreeValidationError</code></td><td>Data validation failures (duplicate IDs, circular references, sex mismatches)</td></tr>
+    <tr><td><code>PedigreeLayoutError</code></td><td>Layout computation failures</td></tr>
+  </tbody>
+</table>
+
+<pre><code><span class="keyword">from</span> pypedigree <span class="keyword">import</span> parse_pedigree, PedigreeParseError
+
+<span class="keyword">try</span>:
+    ped = parse_pedigree(<span class="string">"invalid.ped"</span>)
+<span class="keyword">except</span> PedigreeParseError <span class="keyword">as</span> e:
+    print(f<span class="string">"Parse error: {e}"</span>)</code></pre>
+
+<h3>Invalid Colors</h3>
+<p>Every color in a style is checked before drawing starts, and all offending
+values are reported together as a <code>PedigreeError</code> naming the option
+each came from:</p>
+<pre><code>PedigreeError: Invalid color(s) in style: outline_color = '#12345';
+phenotype_colors['Epilepsy'] = '#zzzzzz'. Expected hex values like
+'#e74c3c' or named colors like 'grey'.</code></pre>
+
+<h3>Warnings</h3>
+<p>Non-fatal diagnostics use dedicated categories, so they can be filtered or
+escalated independently of other libraries' warnings.</p>
+
+<table>
+  <thead>
+    <tr><th>Warning</th><th>Parent</th><th>When emitted</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>PedigreeWarning</code></td><td><code>UserWarning</code></td><td>Base class for all pypedigree warnings</td></tr>
+    <tr><td><code>PedigreeStyleWarning</code></td><td><code>PedigreeWarning</code></td><td>A style definition contains something unusable, e.g. an unknown option</td></tr>
+    <tr><td><code>PedigreeDataWarning</code></td><td><code>PedigreeWarning</code></td><td>Pedigree data is questionable but still renderable, e.g. a father recorded as female</td></tr>
+  </tbody>
+</table>
+
+<pre><code><span class="keyword">import</span> warnings
+<span class="keyword">from</span> pypedigree <span class="keyword">import</span> PedigreeDataWarning, parse_pedigree
+
+<span class="comment"># Treat questionable data as a hard failure</span>
+warnings.simplefilter(<span class="string">"error"</span>, PedigreeDataWarning)
+ped = parse_pedigree(<span class="string">"family.ped"</span>)</code></pre>
+
+<p>An unknown key in a style file is ignored, but reported with a suggested
+spelling &mdash; silently dropping a typo is indistinguishable from the option
+having no effect:</p>
+<pre><code>PedigreeStyleWarning: Unknown style option 'phenotype_color' ignored;
+did you mean 'phenotype_colors'?</code></pre>
+<p>The CLI captures all of these and prints them as
+<code>Warning: &lt;message&gt;</code> on stderr.</p>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p>pypedigree v0.4.0 &mdash; <a href="https://github.com/darkxander/Pypedigree">GitHub</a> &mdash; Bourgeron Lab</p>
+  </div>
+</footer>
+
+</body>
+</html>

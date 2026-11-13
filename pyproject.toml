@@ -1,0 +1,120 @@
+[project]
+name = "pypedigree"
+version = "0.4.0"
+description = "Generate publication-quality pedigree (family tree) diagrams from pedigree files"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Alexandre Mathieu", email = "alexandre.mathieu@pasteur.fr" },
+    { name = "Freddy Cliquet", email = "freddy.cliquet@gmail.com" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.7",
+    "click>=8.0",
+    # Imported directly by the renderer; matplotlib pulling it in is not enough.
+    "numpy>=1.24",
+]
+keywords = ["pedigree", "family-tree", "genetics", "diagram", "visualization", "bioinformatics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Healthcare Industry",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/darkxander/Pypedigree"
+Repository = "https://github.com/darkxander/Pypedigree"
+Issues = "https://github.com/darkxander/Pypedigree/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+    "mypy>=1.11",
+    "pandas-stubs",
+]
+pandas = [
+    "pandas>=1.5",
+]
+
+[project.scripts]
+pypedigree = "pypedigree.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+# Ship what is needed to build and test the package. The reference and
+# example images (~4 MB) and the documentation PDF live in the repository,
+# not in the release artifact; tests/visual/golden is kept so the visual
+# regression suite can actually run from an sdist.
+include = [
+    "/src",
+    "/tests",
+    "/docs/*.md",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/CITATION.cff",
+    "/LICENSE",
+    "/pyproject.toml",
+]
+exclude = [
+    "/tests/data/**/*.png",
+    "/tests/data/**/*.svg",
+    "/tests/visual/large_pedigrees/**",
+    "**/*.actual.png",
+    "**/__pycache__",
+    "**/.DS_Store",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pypedigree"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pypedigree"]
+
+[tool.mypy]
+# The package ships py.typed, so the annotations are a public contract:
+# check them at full strictness rather than shipping an unverified promise.
+python_version = "3.10"
+files = ["src/pypedigree"]
+strict = true
+
+[[tool.mypy.overrides]]
+# matplotlib ships no stubs for these submodules in some versions.
+module = ["matplotlib.*"]
+follow_untyped_imports = true
+
+[tool.coverage.run]
+source = ["pypedigree"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true

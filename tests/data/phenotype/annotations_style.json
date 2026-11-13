@@ -1,0 +1,20 @@
+{
+    "phenotype_colors": {
+        "TSA": "#3498db",
+        "IQ": "#e74c3c",
+        "SRS": "#3498db"
+    },
+    "pgs_colors": {
+        "PGS_autism": "#3498db",
+        "PGS_IQ": "#e74c3c",
+        "PGS_ADHD": "#e67e22"
+    },
+    "gradient_diverging": {
+        "IQ": {"min": 40, "mid": 100, "max": 160, "color_low": "#e74c3c", "color_high": "#2ecc71"}
+    },
+    "gradient_range": {
+        "SRS": [40, 90]
+    },
+    "zero_pad_ids": 3,
+    "dpi": 300
+}

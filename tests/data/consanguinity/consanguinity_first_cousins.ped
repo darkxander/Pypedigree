@@ -1,0 +1,9 @@
+FAM1	gfather	0	0	1	1
+FAM1	gmother	0	0	2	1
+FAM1	father	gfather	gmother	1	1
+FAM1	aunt	gfather	gmother	2	1
+FAM1	mother	0	0	2	1
+FAM1	uncle	0	0	1	1
+FAM1	cousin1	father	mother	1	1
+FAM1	cousin2	uncle	aunt	2	1
+FAM1	child	cousin1	cousin2	2	2

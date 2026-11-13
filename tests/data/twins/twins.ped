@@ -1,0 +1,6 @@
+FAM1	father	0	0	1	1	0	0	0	0
+FAM1	mother	0	0	2	1	0	0	0	0
+FAM1	older	father	mother	2	1	19900101	0	0	0
+FAM1	twin1	father	mother	1	2	19930601	MZ:twin2	0	0
+FAM1	twin2	father	mother	1	1	19930601	MZ:twin1	0	0
+FAM1	younger	father	mother	2	1	19960301	0	0	0

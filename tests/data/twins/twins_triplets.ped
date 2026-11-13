@@ -1,0 +1,5 @@
+FAM1	father	0	0	1	1	0	0	0	0
+FAM1	mother	0	0	2	1	0	0	0	0
+FAM1	trip1	father	mother	1	1	0	DZ:trip2,DZ:trip3	0	0
+FAM1	trip2	father	mother	1	1	0	DZ:trip1,DZ:trip3	0	0
+FAM1	trip3	father	mother	2	1	0	DZ:trip1,DZ:trip2	0	0

@@ -1,0 +1,10 @@
+family_id	sample_id	paternal_id	maternal_id	sex	phenotype	date_of_birth	twins	deceased	proband	carrier
+FAM1	grandfather	0	0	1	1	0	0	0	0	0
+FAM1	grandmother	0	0	2	1	0	0	0	0	1
+FAM1	father	grandfather	grandmother	1	1	0	0	0	0	1
+FAM1	mother	0	0	2	1	0	0	0	0	0
+FAM1	uncle	grandfather	grandmother	1	2	0	0	0	0	0
+FAM1	aunt	0	0	2	1	0	0	0	0	2
+FAM1	child1	father	mother	1	2	0	0	0	1	0
+FAM1	child2	father	mother	2	1	0	0	0	0	1
+FAM1	cousin1	uncle	aunt	1	1	0	0	0	0	2

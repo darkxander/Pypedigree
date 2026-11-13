@@ -1,0 +1,19 @@
+FID	IID	Father	Mother	Sex	Phenotype	Deceased	Consultand	Proband	Pregnancy	Adopted	Childless	ART	Gender_identity	a_Note
+FAM1	I-1	0	0	1	1	1	0	0	0	0	0	0	0	0
+FAM1	I-2	0	0	2	1	0	0	0	0	0	0	0	0	0
+FAM1	II-1	I-1	I-2	1	1	0	0	0	0	0	infertility	0	0	Azoospermia
+FAM1	II-2	I-1	I-2	2	2	0	1	0	0	0	0	0	0	0
+FAM1	II-3	0	0	1	1	0	0	0	0	0	0	0	0	0
+FAM1	II-4	I-1	I-2	1	1	0	0	0	0	0	0	0	woman	0
+FAM1	II-5	I-1	I-2	2	1	0	0	0	0	0	choice	0	nonbinary	0
+FAM1	II-6	I-1	I-2	0	1	0	0	0	SAB	0	0	0	0	8 wk
+FAM1	III-1	II-3	II-2	1	2	0	0	1	0	0	0	0	0	0
+FAM1	III-2	II-3	II-2	2	1	0	0	0	0	in	0	0	0	0
+FAM1	III-3	II-3	II-2	1	1	0	0	0	0	out	0	0	0	0
+FAM1	III-4	II-3	II-2	2	1	0	0	0	SB	0	0	0	0	34 wk
+FAM1	III-5	II-3	II-2	0	2	0	0	0	TOP	0	0	0	0	16 wk
+FAM1	III-6	II-3	II-2	0	1	0	0	0	ECT	0	0	0	0	8 wk
+FAM1	III-7	II-3	II-2	0	1	0	0	0	P	0	0	0	0	16 wk
+FAM2	D1	0	0	1	1	0	0	0	0	0	0	D	0	0
+FAM2	M1	0	0	2	1	0	0	0	0	0	0	0	0	0
+FAM2	C1	D1	M1	0	2	0	0	0	P	0	0	0	0	20 wk

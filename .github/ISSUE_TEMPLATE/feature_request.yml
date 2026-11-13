@@ -1,0 +1,34 @@
+name: Feature request
+description: Suggest a notation, format or option pypedigree should support
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the pedigree or workflow you cannot express today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like pypedigree to do?
+      description: A CLI flag, a style option, a column prefix, a notation...
+    validations:
+      required: true
+
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art
+      description: |
+        Does a clinical-genetics standard cover this (e.g. Bennett et al.
+        pedigree nomenclature)? Does HaploPainter, kinship2 or Madeline do it?
+        A reference makes the notation much easier to get right.
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Current workaround
+      description: How are you handling it now, if at all?

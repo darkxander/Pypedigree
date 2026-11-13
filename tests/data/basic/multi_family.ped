@@ -1,0 +1,6 @@
+FAM1	f1_father	0	0	1	1
+FAM1	f1_mother	0	0	2	1
+FAM1	f1_child	f1_father	f1_mother	2	2
+FAM2	f2_father	0	0	1	1
+FAM2	f2_mother	0	0	2	1
+FAM2	f2_child	f2_father	f2_mother	1	1

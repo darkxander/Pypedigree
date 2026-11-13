@@ -1,0 +1,5 @@
+FAM1	gfather	0	0	1	1
+FAM1	gmother	0	0	2	1
+FAM1	father	gfather	gmother	1	1
+FAM1	mother	0	0	2	1
+FAM1	child	father	mother	2	2

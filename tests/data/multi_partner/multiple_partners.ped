@@ -1,0 +1,5 @@
+FAM1	father1	0	0	1	1
+FAM1	mother	0	0	2	1
+FAM1	father2	0	0	1	1
+FAM1	child1	father1	mother	2	2
+FAM1	child2	father2	mother	1	1

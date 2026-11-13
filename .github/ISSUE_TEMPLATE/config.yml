@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question about usage
+    url: https://github.com/darkxander/Pypedigree/blob/main/docs/pypedigree_documentation.html
+    about: Check the full documentation first — file formats, CLI options and the API are covered there.

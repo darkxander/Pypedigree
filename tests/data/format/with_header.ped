@@ -1,0 +1,4 @@
+fid	iid	father	mother	sex	phenotype
+FAM1	father	0	0	1	1
+FAM1	mother	0	0	2	1
+FAM1	child	father	mother	2	2

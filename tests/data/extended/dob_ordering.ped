@@ -1,0 +1,5 @@
+FAM1	father	0	0	1	1	0	0	0	0
+FAM1	mother	0	0	2	1	0	0	0	0
+FAM1	youngest	father	mother	1	1	19990101	0	0	0
+FAM1	oldest	father	mother	2	1	19900101	0	0	0
+FAM1	middle	father	mother	1	1	19950601	0	0	0

@@ -1,0 +1,5 @@
+FID	ID	Father	Mother	Sex	b_Epilepsy	g_IQ	o_Proband	c_Diagnosis
+FAM1	father	0	0	1	1	105	1	ASD
+FAM1	mother	0	0	2	2	118	2	Control
+FAM1	son1	father	mother	1	2	92	1	ADHD
+FAM1	daughter1	father	mother	2	1	110	2	ASD

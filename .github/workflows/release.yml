@@ -1,0 +1,105 @@
+name: Release
+
+# Publishes to PyPI when a version tag is pushed:
+#
+#   git tag -a v0.3.1 -m "Release 0.3.1" && git push origin v0.3.1
+#
+# Authentication uses PyPI Trusted Publishing (OIDC) — there is no API token
+# to store. This requires a one-time setup on PyPI, see docs/RELEASING.md.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build and check only, do not publish"
+        type: boolean
+        default: true
+
+jobs:
+  build:
+    name: Build and check distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2  # v10.3.3
+        with:
+          version: "latest"
+
+      - name: Verify the tag matches the package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tag="${GITHUB_REF#refs/tags/v}"
+          declared=$(grep -m1 '^version = ' pyproject.toml | cut -d'"' -f2)
+          echo "tag=$tag  pyproject=$declared"
+          if [ "$tag" != "$declared" ]; then
+            echo "::error::Tag v$tag does not match pyproject.toml version $declared"
+            exit 1
+          fi
+
+      - name: Run the test suite
+        run: |
+          uv sync --extra dev --extra pandas
+          uv run pytest -q
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Check metadata renders on PyPI
+        run: uvx twine check --strict dist/*
+
+      - name: Verify the sdist is self-sufficient
+        # Everything needed to build and test must be inside the archive.
+        run: |
+          mkdir -p /tmp/sdist && tar -xzf dist/*.tar.gz -C /tmp/sdist
+          cd /tmp/sdist/*/
+          uv run --no-project --with pytest --with matplotlib --with click --with . \
+            pytest -q
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') && !inputs.dry_run
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pypedigree
+    permissions:
+      # Required for Trusted Publishing; mints a short-lived OIDC token.
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create the GitHub release
+    needs: publish
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Create the release with the built artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/* \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "See [CHANGELOG.md](https://github.com/${GITHUB_REPOSITORY}/blob/main/CHANGELOG.md)."

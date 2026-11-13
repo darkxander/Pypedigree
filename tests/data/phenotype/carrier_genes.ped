@@ -1,0 +1,8 @@
+family_id	sample_id	paternal_id	maternal_id	sex	phenotype	cr_CFTR	cr_HEXA
+FAM1	grandfather	0	0	1	1	1	0
+FAM1	grandmother	0	0	2	1	0	1
+FAM1	father	grandfather	grandmother	1	1	1	1
+FAM1	mother	0	0	2	2	0	0
+FAM1	child1	father	mother	1	2	2	0
+FAM1	child2	father	mother	2	1	0	-9
+FAM1	child3	father	mother	2	1	0	0

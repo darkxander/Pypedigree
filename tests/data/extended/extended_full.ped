@@ -1,0 +1,6 @@
+FAM1	gfather	0	0	1	1	19400515	0	1	0
+FAM1	gmother	0	0	2	1	19420301	0	0	0
+FAM1	father	gfather	gmother	1	1	19650812	0	0	0
+FAM1	mother	0	0	2	1	19680101	0	0	0
+FAM1	child1	father	mother	2	2	19950623	0	0	1
+FAM1	child2	father	mother	1	1	19980115	0	0	0

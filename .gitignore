@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated docs (exclude other PDF/DOCX but keep main documentation)
+docs/*.pdf
+docs/*.docx
+
+# Local test data
+arbre_test/
+
+# Output images (except tracked examples and test references)
+*.png
+*.svg
+*.pdf
+!docs/imgs/*.png
+!docs/imgs/**/*.png
+!tests/data/**/*.png
+!tests/visual/golden/*.png
+# Visual regression failure artifacts (written next to the golden on mismatch)
+tests/visual/golden/*.actual.png
+tests/visual/golden/*.diff.png
+!tests/visual/large_pedigrees/*.png
+!docs/pypedigree_documentation.pdf

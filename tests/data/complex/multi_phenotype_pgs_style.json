@@ -1,0 +1,9 @@
+{
+    "phenotype_colors": {
+        "ASD": "#e74c3c",
+        "ADHD": "#9b59b6",
+        "IQ": "#3498db",
+        "SRS": "#e67e22"
+    },
+    "dpi": 300
+}
