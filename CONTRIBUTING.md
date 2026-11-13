@@ -82,7 +82,9 @@ Then update the docs: `README.md`, `CHANGELOG.md`, `docs/api.md` and
   request why each one changed. A golden image regenerated without explanation
   hides a regression. The comparison counts changed pixels and fails above
   0.01% of them: when a test fails, `tests/visual/golden/<name>.diff.png`
-  shows the changes in red.
+  shows the changes in red. The golden images hold for matplotlib 3.7 to
+  3.10 (`GOLDEN_MATPLOTLIB`); with another version the comparison is skipped,
+  so regenerate them with the version pinned in `uv.lock` (`uv run`).
 
 **Do not commit test data derived from real individuals.** Every fixture in
 `tests/data/` is synthetic — see `tests/data/README.md`. Accession numbers and

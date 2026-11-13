@@ -295,7 +295,9 @@ Validation warnings are printed to stderr as `Warning: <message>`.
 - `tests/visual/test_visual_regression.py` — comparison against golden images by
   changed-pixel count (a channel moving by > 0.1; fails above 0.01% of pixels or on
   any size change). Renders are pixel-reproducible across platforms and matplotlib
-  3.7-3.10, so any failure is a real change; a mean over the image hid regressions
+  3.7-3.10, so any failure is a real change; a mean over the image hid regressions.
+  matplotlib 3.11 places text about a pixel lower, so outside `GOLDEN_MATPLOTLIB`
+  (3.7 to <3.11) the comparison is skipped, not failed
   - Golden images in `tests/visual/golden/`; a failure writes `<name>.actual.png`
     and `<name>.diff.png` (changes in red) next to the golden
   - Regenerate: `uv run pytest tests/visual/ --regen-golden`
@@ -314,6 +316,8 @@ Validation warnings are printed to stderr as `Warning: <message>`.
 - `tests/test_nomenclature.py` — Standard notation: parsing and codes, `symbols.py`
   decisions and geometry, layout (shape from gender, dashed adopted-in line,
   childless edges, circular direction), PNG and SVG drawing, builder
+- CI also runs the suite with the newest release of every dependency
+  (`uv sync --upgrade`, job `test-latest-versions`), since `uv.lock` pins older ones
 - CI also runs the suite with every dependency at its declared minimum version
   (`uv pip install --resolution lowest-direct`) on Python 3.10; raising a lower
   bound in `pyproject.toml` is a user-visible change

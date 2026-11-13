@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.4.0] - 2026-11-09
+## [0.4.0] - 2026-11-13
 
 Rendering-correctness release. Figures produced by this version differ from
 0.3.0 wherever a pedigree carries phenotypes — the changes below are fixes,
@@ -257,6 +257,13 @@ control.
 
 ### Fixed
 
+- The test suite passes from the source distribution with the newest
+  matplotlib. matplotlib 3.11 places text about a pixel lower than 3.7-3.10,
+  which the golden images were made with, so the visual comparison is now
+  skipped outside that range instead of failing; and the check that every
+  generated fixture has its image is skipped where the images are not
+  shipped. A new CI job runs the suite with the newest release of every
+  dependency, since `uv.lock` pins older ones.
 - A duplicated individual (someone with several partners, or a partner drawn
   twice to break a loop) is drawn with the original's phenotype bands. It
   was a plain symbol, so in a figure with bands it lost every phenotype.

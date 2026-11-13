@@ -62,6 +62,8 @@ class TestGeneratedFixturesAreReproducible:
 
     @pytest.mark.parametrize("rel", GENERATED)
     def test_generated_fixture_has_a_paired_image(self, rel):
+        if not any(TEST_DATA_DIR.rglob("*.png")):
+            pytest.skip("fixture images are not shipped in the source distribution")
         assert (TEST_DATA_DIR / rel).with_suffix(".png").exists()
 
 

@@ -36,10 +36,16 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 MAX_CHANNEL_DIFF = 0.1
 
 # A render fails when more than this fraction of its pixels changed. Renders
-# are reproducible to the pixel across platforms and the supported matplotlib
-# versions (3.7 to 3.10 measured: 0 pixels); the smallest real regression
-# seen, a legend change, moved 597 pixels (0.1%).
+# are reproducible to the pixel across platforms and the matplotlib versions
+# the goldens were made with (3.7 to 3.10 measured: 0 pixels); the smallest
+# real regression seen, a legend change, moved 597 pixels (0.1%).
 MAX_CHANGED_FRACTION = 1e-4
+
+# matplotlib versions the goldens hold for, as (major, minor), upper bound
+# excluded. matplotlib 3.11 places text about one pixel lower (shapes, lines
+# and hatching are unchanged), which changes 0.1-0.5% of the pixels, so the
+# comparison is skipped outside this range rather than failing on it.
+GOLDEN_MATPLOTLIB = ((3, 7), (3, 11))
 
 
 @pytest.fixture
@@ -102,6 +108,14 @@ def _assert_visual_match(
         GOLDEN_DIR.mkdir(parents=True, exist_ok=True)
         plt.imsave(str(golden), actual)
         pytest.skip(f"Golden image generated: {golden}. Re-run to compare.")
+
+    version = tuple(matplotlib.__version_info__[:2])
+    low, high = GOLDEN_MATPLOTLIB
+    if not low <= version < high:
+        pytest.skip(
+            f"golden images hold for matplotlib {low[0]}.{low[1]} to <{high[0]}.{high[1]}, "
+            f"not {matplotlib.__version__}"
+        )
 
     expected = plt.imread(str(golden))
     mask = _changed_pixels(actual, expected)
